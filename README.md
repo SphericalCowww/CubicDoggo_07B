@@ -1,6 +1,6 @@
 # CubicDoggo 07B: Homemade 12-DOF 4-Legged Robot Recipe
 
-Cubic Doggo 07B Wouf is upgraded from the base Cubic Doggo  <a href="https://github.com/SphericalCowww/CubicDoggo">GitHub</a>. The goal is to incorporate a stronger servo and improve the structural support that can handle such a change.
+Cubic Doggo 07B Wouf is upgraded from the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. The goal is to incorporate a stronger servo and improve the structural support that can handle such a change.
 
 
 ## Ingredients
