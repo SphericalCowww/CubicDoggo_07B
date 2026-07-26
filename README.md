@@ -12,3 +12,9 @@ Cubic Doggo 07B Wouf is upgraded from the base <a href="https://github.com/Spher
 | servo motor | <a href="https://eckstein-shop.de/feetech-st-3215-c018-servo-en">ST-3215-C018</a> | 12 | Max stall torque: 3.0 N*m (at 12.0V). Need also corresponding signal wires of various lengths |
 | driver board | <a href="https://eckstein-shop.de/WaveShare-Serial-Bus-Servo-Driver-Board-for-ST-SC-Serial-Bus-Servos-EN">servo driver</a> | 2 | Ccontrol and power the servos in daisy chain |
 
+
+## References:
+
+- Waveshare, ST3215 Servo (<a href="https://www.waveshare.com/wiki/ST3215_Servo">Link</a>) 
+- Kitajima, How to Use the ST3215 Servo Motor (<a href="https://www.youtube.com/watch?v=T5T7qCg4pGE">YouTube</a>) 
+
