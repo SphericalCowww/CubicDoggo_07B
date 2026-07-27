@@ -12,7 +12,11 @@ Cubic Doggo 07B Wouf is upgraded from the base <a href="https://github.com/Spher
 | servo motor | <a href="https://eckstein-shop.de/feetech-st-3215-c018-servo-en">ST-3215-C018</a> | 12 | Max stall torque: 3.0 N*m (at 12.0V). Need also corresponding signal wires of various lengths |
 | driver board | <a href="https://eckstein-shop.de/WaveShare-Serial-Bus-Servo-Driver-Board-for-ST-SC-Serial-Bus-Servos-EN">servo driver</a> | 2 | Ccontrol and power the servos in daisy chain |
 
-## Testing ST-3215 
+## Running a Single Servo on ROS2
+
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo1.png" height="200">
+
+### Testing with python library
 
 Plug in the device:
 
