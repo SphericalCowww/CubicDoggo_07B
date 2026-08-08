@@ -15,12 +15,12 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(hardware_interface REQUIRED)
 find_package(pluginlib REQUIRED)
 
-add_subdirectory(SCServo_Linux)
+add_subdirectory(SCServo_Linux/SCServo_Linux_220329/SCServo_Linux)
 
 ###########################################################################
 add_executable(testSpin_servo1 src/testSpin_servo1.cpp)
 target_include_directories(testSpin_servo1 PUBLIC 
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SCServo_Linux>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SCServo_Linux/SCServo_Linux_220329/SCServo_Linux>
 )
 ament_target_dependencies(testSpin_servo1 rclcpp rclcpp_lifecycle hardware_interface)
 target_link_libraries(testSpin_servo1 SCServo)
