@@ -16,7 +16,7 @@ Cubic Doggo 07B Wouf is upgraded from the base <a href="https://github.com/Spher
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo1.png" height="200">
 
-### Testing with python library
+### Testing with Python library
 
 Plug in the device:
 
@@ -43,6 +43,15 @@ To change the servo ID,
     vim changeID_1servo.py
     # modify old and new ID
     python3 changeID_1servo.py
+
+### Testing with ROS
+
+Download ``ST/SC serial bus servo control library (Linux)`` from <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">link</a>, expand it under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/`` and replace ``src/my_toolbox_scs_workbench/SCServo_Linux/SCServo_Linux_220329/SCServo_Linux/CMakeLists.txt``.
+
+Then remember to change ID under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/src/testSpin_servo1.cpp``, run,
+
+    colcon build --packages-select my_toolbox_scs_workbench --cmake-clean-first
+    ros2 run my_toolbox_scs_workbench testSpin_servo1
 
 ## References:
 
