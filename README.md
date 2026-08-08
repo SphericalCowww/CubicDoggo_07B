@@ -35,11 +35,20 @@ Download ``ST/SC serial bus servo control library (Python)`` from <a href="https
     cp -r STServo_Python/stservo-env/scservo_sdk .
     cp STServo_Python/stservo-env/sms_sts/read_write.py test.py    
     vim test.py
-    # DEVICENAME                  = '/dev/ttyUSB0'
-    python3 test.py 
+    # DEVICENAME = '/dev/ttyUSB0'
+    python3 test.py               # or spinTest_1servo.py in the code
+
+To change the servo ID,
+
+    vim changeID_1servo.py
+    # modify old and new ID
+    python3 changeID_1servo.py
 
 ## References:
 
 - Waveshare, <a href="https://www.waveshare.com/wiki/ST3215_Servo">ST3215 Servo</a>, <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">Bus Servo Adapter</a>
 - Kitajima, How to Use the ST3215 Servo Motor (<a href="https://www.youtube.com/watch?v=T5T7qCg4pGE">YouTube</a>) 
 
+## Acknowledgements
+
+- Libraries and some examples taken from: https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A). The license is not defined.
