@@ -6,7 +6,7 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace cubic_doggo_namespace {
-    hardware_interface::CallbackReturn HardwareInterfaceU2D2_cubic_doggo::on_init
+    hardware_interface::CallbackReturn HardwareInterfaceST3215_cubic_doggo::on_init
         (const hardware_interface::HardwareComponentInterfaceParams &params) 
     {
         if (hardware_interface::SystemInterface::on_init(params) !=
@@ -117,7 +117,7 @@ namespace cubic_doggo_namespace {
 
         return hardware_interface::CallbackReturn::SUCCESS;
     }
-    hardware_interface::CallbackReturn HardwareInterfaceU2D2_cubic_doggo::on_activate  
+    hardware_interface::CallbackReturn HardwareInterfaceST3215_cubic_doggo::on_activate  
         (const rclcpp_lifecycle::State & previous_state) 
     {
         RCLCPP_INFO(get_logger(), "hardware_interface:on_activate()");
@@ -133,7 +133,7 @@ namespace cubic_doggo_namespace {
 
         return hardware_interface::CallbackReturn::SUCCESS;
     }
-    hardware_interface::CallbackReturn HardwareInterfaceU2D2_cubic_doggo::on_deactivate
+    hardware_interface::CallbackReturn HardwareInterfaceST3215_cubic_doggo::on_deactivate
         (const rclcpp_lifecycle::State & previous_state) 
     {
         RCLCPP_INFO(get_logger(), "hardware_interface:on_deactivate()");
@@ -144,7 +144,7 @@ namespace cubic_doggo_namespace {
         return hardware_interface::CallbackReturn::SUCCESS;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    hardware_interface::return_type HardwareInterfaceU2D2_cubic_doggo::read 
+    hardware_interface::return_type HardwareInterfaceST3215_cubic_doggo::read 
         (const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
         RCLCPP_DEBUG(get_logger(), "hardware_interface:read()");
@@ -177,7 +177,7 @@ namespace cubic_doggo_namespace {
 
         return hardware_interface::return_type::OK;
     }
-    hardware_interface::return_type HardwareInterfaceU2D2_cubic_doggo::write
+    hardware_interface::return_type HardwareInterfaceST3215_cubic_doggo::write
         (const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
         RCLCPP_DEBUG(get_logger(), "hardware_interface:write()");
@@ -215,7 +215,7 @@ namespace cubic_doggo_namespace {
         return hardware_interface::return_type::OK;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void HardwareInterfaceU2D2_cubic_doggo::initialize_servo_(uint8_t servo_id) {
+    void HardwareInterfaceST3215_cubic_doggo::initialize_servo_(uint8_t servo_id) {
         rad_positions_[servo_id] = rad_positions_init_[servo_id];
         dxl_positions_[servo_id] = (int32_t)(rad_positions_[servo_id]*(MAX_POSITION-MIN_POSITION)/(2.0*DXL_PI));
         rad_velocities_[servo_id] = 0.0;
@@ -225,7 +225,7 @@ namespace cubic_doggo_namespace {
     }
 }
 #include "pluginlib/class_list_macros.hpp"
-PLUGINLIB_EXPORT_CLASS(cubic_doggo_namespace::HardwareInterfaceU2D2_cubic_doggo, hardware_interface::SystemInterface)
+PLUGINLIB_EXPORT_CLASS(cubic_doggo_namespace::HardwareInterfaceST3215_cubic_doggo, hardware_interface::SystemInterface)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
