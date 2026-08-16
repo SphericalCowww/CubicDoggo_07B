@@ -27,9 +27,10 @@ Plug in the device:
 
 Download ``ST/SC serial bus servo control library (Python)`` from <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">link</a>, put it under ``CubicDoggo_07B/st3215test/``.
 
-    cd CubicDoggo_07B/st3215test/
-    python3 -m venv st3215env
-    source st3215env/bin/activate
+    cd CubicDoggo_07B/
+    python3 -m venv env_07B
+    source env_07B/bin/activate
+    cd st3215test/
     unzip STServo_Python.zip
     pip install -r STServo_Python/requirements.txt
     cp -r STServo_Python/stservo-env/scservo_sdk .
