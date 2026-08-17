@@ -28,16 +28,17 @@ Plug in the device:
 Download ``ST/SC serial bus servo control library (Python)`` from <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">link</a>, put it under ``CubicDoggo_07B/st3215test/``.
 
     cd CubicDoggo_07B/
-    python3 -m venv env_07B
-    source env_07B/bin/activate
-    cd st3215test/
+    cd ..
+    python3 -m venv CubicDoggo_07B_env
+    source CubicDoggo_07B_env/bin/activate
+    cd CubicDoggo_07B/st3215test/
     unzip STServo_Python.zip
     pip install -r STServo_Python/requirements.txt
     cp -r STServo_Python/stservo-env/scservo_sdk .
     cp STServo_Python/stservo-env/sms_sts/read_write.py test.py    
     vim test.py
-    # DEVICENAME = '/dev/ttyUSB0'
-    python3 test.py               # or spinTest_1servo.py in the code
+    # DEVICENAME = '/dev/ttyUSB0'    # change to the port for the controller
+    python3 test.py                  # or spinTest_1servo.py in the code
 
 To change the servo ID,
 
