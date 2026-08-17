@@ -60,3 +60,6 @@ else:
 
 # Close port
 portHandler.closePort()
+
+
+

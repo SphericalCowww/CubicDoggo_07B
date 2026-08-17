@@ -2,7 +2,7 @@
 #include <chrono>
 #include <thread>
 #include "rclcpp/rclcpp.hpp"
-#include "my_robot_firmware/hardware_interface_cubic_doggo_dynamixel_u2d2_xl430.hpp"
+#include "my_robot_firmware/hardware_interface_cubic_doggo_st3215.hpp"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace cubic_doggo_namespace {

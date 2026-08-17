@@ -25,7 +25,14 @@ target_include_directories(testSpin_servo1 PUBLIC
 ament_target_dependencies(testSpin_servo1 rclcpp rclcpp_lifecycle hardware_interface)
 target_link_libraries(testSpin_servo1 SCServo)
 
-install(TARGETS testSpin_servo1
+add_executable(scanUpdateID_zeroing src/scanUpdateID_zeroing.cpp)
+target_include_directories(scanUpdateID_zeroing PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SCServo_Linux/SCServo_Linux_220329/SCServo_Linux>
+)
+ament_target_dependencies(scanUpdateID_zeroing rclcpp rclcpp_lifecycle hardware_interface)
+target_link_libraries(scanUpdateID_zeroing SCServo)
+
+install(TARGETS testSpin_servo1 scanUpdateID_zeroing
     DESTINATION lib/${PROJECT_NAME}
 )
 
