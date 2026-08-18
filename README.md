@@ -54,6 +54,7 @@ Then remember to change ID under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/s
 
     colcon build --packages-select my_toolbox_scs_workbench --cmake-clean-first
     ros2 run my_toolbox_scs_workbench testSpin_servo1
+    ros2 run my_toolbox_scs_workbench scanUpdateID_zeroing
 
 ## References:
 
