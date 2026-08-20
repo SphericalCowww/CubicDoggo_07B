@@ -8,14 +8,14 @@ int main() {
     int         baud_rate = 1000000;
 
     int IDrange  = 254;         // search ID up to
-    int targetID = 1;           // set to this ID
+    int targetID = -1;           // set to this ID, -1 to not set
     //////////////////////////////////////////////////////////////////////////
     SMS_STS sts_wb;
     if(!sts_wb.begin(baud_rate, port_name)){
         std::cout<<"scanUpdateID_zeroing(): failed to initialize SMS_STS servo!"<<std::endl;
         return 0;
     }
-
+    //////////////////////////////////////////////////////////////////////////
     int foundID = -1;
     std::cout<<"scanUpdateID_zeroing(): scanning for servo ID..."<<std::endl;
     for (int id = 0; id < IDrange; id++) {
@@ -29,35 +29,26 @@ int main() {
     // NOTE: only use this if ONE servo is connected!
     if (foundID == -1) {
         std::cout<<"scanUpdateID_zeroing(): no specific ID found. Broadcasting ID (254)..."<<std::endl;
-        foundID = 0xFE; 
+        foundID = 0xFE;     // 254 
     }
-
-    /*
-    if (foundID != -1) {
-        std::cout << "Changing ID " << foundID << " to " << targetID << "..." << std::endl;
+    //////////////////////////////////////////////////////////////////////////
+    if (targetID == foundID) targetID = -1;
+    if ((foundID != -1) && (targetID != -1)) {
+        std::cout << "scanUpdateID_zeroing(): changing ID "<<foundID<<" to "<<targetID<<"..."<<std::endl;
         
-        // Register 5 (SCSCL_ID) is the ID register. 
-        // We unlock the EPROM first (some versions require this, others don't)
-        sts_wb.writeByte(foundID, SCSCL_LOCK, 0); 
-        
-        // Write new ID to register 5
-        sts_wb.writeByte(foundID, SCSCL_ID, targetID);
-        
-        // Lock EPROM again
-        sts_wb.writeByte(targetID, SCSCL_LOCK, 1);
+        sts_wb.unLockEprom(foundID);                // unlock EEPROM 
+        sts_wb.writeByte(foundID, 5, targetID);     // register 5 for updating ID
+        sts_wb.LockEprom(targetID);                 // lock EEPROM
+        usleep(1000000);                            // 1 second for update
 
-        std::cout << "ID change command sent. Testing new ID..." << std::endl;
-        usleep(200000); // Wait for EEPROM write
-
-        if (sts_wb.ping(targetID) != -1) {
-            std::cout << "scanUpdateID_zeroing(): Success! Servo is now ID: " << targetID << std::endl;
+        if (sts_wb.Ping(targetID) != -1) {
+            std::cout<<"scanUpdateID_zeroing(): servo ID updated to: "<<targetID<<std::endl;
         } else {
-            std::cout << "scanUpdateID_zeroing(): Verification failed. Check wiring or power." << std::endl;
+            std::cout<<"scanUpdateID_zeroing(): servo ID update failed"<<std::endl;
         }
-    } else {
-        std::cout << "No servo detected on the bus." << std::endl;
+    } else if (foundID == -1) {
+        std::cout<<"scanUpdateID_zeroing(): no servo detected on the bus"<<std::endl;
     }
-    */
 
     sts_wb.end();
     return 0;
