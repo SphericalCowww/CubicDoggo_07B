@@ -54,11 +54,13 @@ Then remember to change ID under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/s
 
     colcon build --packages-select my_toolbox_scs_workbench --cmake-clean-first
     ros2 run my_toolbox_scs_workbench testSpin_servo1
+    ros2 run my_toolbox_scs_workbench scanUpdateID_zeroing
 
 ## References:
 
 - Waveshare, <a href="https://www.waveshare.com/wiki/ST3215_Servo">ST3215 Servo</a>, <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">Bus Servo Adapter</a>
-- Kitajima, How to Use the ST3215 Servo Motor (<a href="https://www.youtube.com/watch?v=T5T7qCg4pGE">YouTube</a>) 
+- Kitajima, How to Use the ST3215 Servo Motor (<a href="https://www.youtube.com/watch?v=T5T7qCg4pGE">YouTube</a>)
+- Kevin McAleer, Why are bus servos better? ([YouTube](https://www.youtube.com/watch?v=nzBZOTdEdtE))
 
 ## Acknowledgements
 
