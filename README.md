@@ -57,7 +57,7 @@ To change the servo ID and initialize the servo, connect only 1 controller and 1
     # Modify targetID and pos_offset
     ros2 run my_toolbox_scs_workbench scanUpdateID_zeroing
 
-**NOTE:** Record the ``pos_offset`` such that the servo's default position is finely aligned.
+**NOTE:** Record the ``pos_offset`` for each servo independently such that each of their default position is finely aligned.
 
 **NOTE:** ``sts_wb.writeByte``requires unlocking the EEPROM; do NOT do this firmware change too frequently, otherwise it can cause corruption.
 
