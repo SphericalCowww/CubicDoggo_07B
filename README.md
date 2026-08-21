@@ -40,12 +40,6 @@ Download ``ST/SC serial bus servo control library (Python)`` from <a href="https
     # DEVICENAME = '/dev/ttyUSB0'    # change to the port for the controller
     python3 test.py                  # or spinTest_1servo.py in the code
 
-To change the servo ID,
-
-    vim changeID_1servo.py
-    # modify old and new ID
-    python3 changeID_1servo.py
-
 ### Testing with ROS
 
 Download ``ST/SC serial bus servo control library (Linux)`` from <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">link</a>, expand it under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/`` and replace ``src/my_toolbox_scs_workbench/SCServo_Linux/SCServo_Linux_220329/SCServo_Linux/CMakeLists.txt``.
@@ -54,7 +48,18 @@ Then remember to change ID under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/s
 
     colcon build --packages-select my_toolbox_scs_workbench --cmake-clean-first
     ros2 run my_toolbox_scs_workbench testSpin_servo1
+
+### Initializing the servos
+
+To change the servo ID and initialize the servo, connect only 1 controller and 1 servo,
+
+    vim CubicDoggo_07B/src/my_toolbox_scs_workbench/src/scanUpdateID_zeroing.cpp
+    # Modify targetID and pos_offset
     ros2 run my_toolbox_scs_workbench scanUpdateID_zeroing
+
+**NOTE:** Record the ``pos_offset`` such that the servo's default position is finely aligned.
+
+**NOTE:** ``sts_wb.writeByte``requires unlocking the EEPROM; do NOT do this firmware change too frequently, otherwise it can cause corruption.
 
 ## References:
 
