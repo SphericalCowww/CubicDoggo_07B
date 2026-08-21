@@ -26,13 +26,13 @@ int main()
 	while(1){
 		pos[0] = MAXIMUM_POSITION_VALUE*3.0/4.0, vel[0] = 1000, acc[0] = 20;
 		sts_wb.SyncWritePosEx(ID, 1, pos, vel, acc);
-		std::cout<<"goal pos = "<<int(pos[0])<<std::endl;
         present_pos   = sts_wb.ReadPos(ID[0]);
         present_vel   = sts_wb.ReadSpeed(ID[0]);
         present_load  = sts_wb.ReadLoad(ID[0]);
         moving_status = sts_wb.ReadMove(ID[0]);
         std::cout<<"testSpin_servo1():\n"
                  <<"  ID:            "<<int(ID[0])<<"\n"
+                 <<"  goal pos:      "<<int(pos[0])<<"\n"
                  <<"  present_pos:   "<<present_pos<<"\n"
                  <<"  present_vel:   "<<present_vel<<"\n"
                  <<"  present_load:  "<<present_load<<"\n"
@@ -41,13 +41,13 @@ int main()
   
 		pos[0] = MAXIMUM_POSITION_VALUE*1.0/4.0, vel[0] = 2000, acc[0] = 50;
 		sts_wb.SyncWritePosEx(ID, 1, pos, vel, acc);
-		std::cout<<"goal pos = "<<int(pos[0])<<std::endl;
 	    present_pos   = sts_wb.ReadPos(ID[0]);
         present_vel   = sts_wb.ReadSpeed(ID[0]);
         present_load  = sts_wb.ReadLoad(ID[0]);
         moving_status = sts_wb.ReadMove(ID[0]);
         std::cout<<"testSpin_servo1():\n"
                  <<"  ID:            "<<int(ID[0])<<"\n"
+                 <<"  goal pos:      "<<int(pos[0])<<"\n"
                  <<"  present_pos:   "<<present_pos<<"\n"
                  <<"  present_vel:   "<<present_vel<<"\n"
                  <<"  present_load:  "<<present_load<<"\n"
