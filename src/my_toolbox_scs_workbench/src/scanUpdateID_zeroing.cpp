@@ -9,8 +9,8 @@ int main() {
     const char* port_name = "/dev/ttyACM0";
     int         baud_rate = 1000000;
 
-    int targetID   = 11;            // set to this ID, -1 to not set
-    int pos_offset = 25;            // offset to the default position, remember to recording it
+    int targetID   = 31;            // set to this ID, -1 to not set
+    int pos_offset = 20;            // offset to the default position, remember to recording it
     ///////////////////////////////////////////////////////////////// connect only 1 controller and 1 servo
     SMS_STS sts_wb;
     if(!sts_wb.begin(baud_rate, port_name)){

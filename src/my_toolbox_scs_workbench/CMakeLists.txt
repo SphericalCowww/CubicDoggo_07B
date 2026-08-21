@@ -39,7 +39,14 @@ target_include_directories(testSpin_servo2_controller2 PUBLIC
 ament_target_dependencies(testSpin_servo2_controller2 rclcpp rclcpp_lifecycle hardware_interface)
 target_link_libraries(testSpin_servo2_controller2 SCServo)
 
-install(TARGETS scanUpdateID_zeroing testSpin_servo1 testSpin_servo2_controller2
+add_executable(testSpin_servo3 src/testSpin_servo3.cpp)
+target_include_directories(testSpin_servo3 PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/SCServo_Linux/SCServo_Linux_220329/SCServo_Linux>
+)
+ament_target_dependencies(testSpin_servo3 rclcpp rclcpp_lifecycle hardware_interface)
+target_link_libraries(testSpin_servo3 SCServo)
+
+install(TARGETS scanUpdateID_zeroing testSpin_servo1 testSpin_servo2_controller2 testSpin_servo3
     DESTINATION lib/${PROJECT_NAME}
 )
 

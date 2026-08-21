@@ -29,7 +29,7 @@ int main()
 	while(1){
 		for (std::size_t ctrlIdx = 0; ctrlIdx < std::size(sts_wb); ctrlIdx++) {
             pos[ctrlIdx] = MAXIMUM_POSITION_VALUE*3.0/4.0, vel[ctrlIdx] = 1000, acc[ctrlIdx] = 20;
-	    	sts_wb[ctrlIdx].SyncWritePosEx(ID, 1, pos, vel, acc);
+	    	sts_wb[ctrlIdx].SyncWritePosEx(&ID[ctrlIdx], 1, &pos[ctrlIdx], &vel[ctrlIdx], &acc[ctrlIdx]);
 		    std::cout<<"goal pos = "<<int(pos[ctrlIdx])<<std::endl;
             present_pos[ctrlIdx]   = sts_wb[ctrlIdx].ReadPos(ID[ctrlIdx]);
             present_vel[ctrlIdx]   = sts_wb[ctrlIdx].ReadSpeed(ID[ctrlIdx]);
@@ -48,8 +48,8 @@ int main()
 
         for (std::size_t ctrlIdx = 0; ctrlIdx < std::size(sts_wb); ctrlIdx++) {
             pos[ctrlIdx] = MAXIMUM_POSITION_VALUE*1.0/4.0, vel[ctrlIdx] = 2000, acc[ctrlIdx] = 50;
-	    	sts_wb[ctrlIdx].SyncWritePosEx(ID, 1, pos, vel, acc);
-		    std::cout<<"goal pos = "<<int(pos[ctrlIdx])<<std::endl;
+		    sts_wb[ctrlIdx].SyncWritePosEx(&ID[ctrlIdx], 1, &pos[ctrlIdx], &vel[ctrlIdx], &acc[ctrlIdx]);
+            std::cout<<"goal pos = "<<int(pos[ctrlIdx])<<std::endl;
             present_pos[ctrlIdx]   = sts_wb[ctrlIdx].ReadPos(ID[ctrlIdx]);
             present_vel[ctrlIdx]   = sts_wb[ctrlIdx].ReadSpeed(ID[ctrlIdx]);
             present_load[ctrlIdx]  = sts_wb[ctrlIdx].ReadLoad(ID[ctrlIdx]);
