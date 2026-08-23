@@ -26,7 +26,8 @@ Other than the M3 screw, one specific requirement is the M2 self-tapping screws,
 ### Power system
 
   * Daisy chain no more than 3 servos to avoid delay
-  * Power the servo controller with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity.
+  * Power the servo controller with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity
+  * The ground between the 2 controllers should be shared when both are connecting the Rasp Pi with USB
   * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put a kapton tape to insulate the two boards
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/powerSystem.png" height="400"> 
