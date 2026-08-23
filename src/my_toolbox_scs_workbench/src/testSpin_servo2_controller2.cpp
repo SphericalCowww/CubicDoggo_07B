@@ -6,12 +6,12 @@ int const MAXIMUM_POSITION_VALUE = 4095;
 int main()
 {
     const char* port_name[2] = {"/dev/ttyACM0", "/dev/ttyACM1"};
-    int         baud_rate = 1000000;
+    int         baud_rate    = 1000000;
     int         servoID[2]   = {1, 1}; 
     //////////////////////////////////////////////////////////////////////////
     u8  ID [2] = {servoID[0], servoID[1]};
     s16 pos[2];
-    u16 vel[2];                 // unit of 0.0146rpm
+    u16 vel[2];                 // unit of 1/4096 rpm
     u8  acc[2];                 // 0 for maximum possible acceleration
     int present_pos[2];
     int present_vel[2];

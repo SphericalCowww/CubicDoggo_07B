@@ -10,7 +10,7 @@ int main()
     u8          ID[3]     = {11, 12, 13};
     //////////////////////////////////////////////////////////////////////////
     s16 pos[3];
-    u16 vel[3];                 // unit of 0.0146rpm
+    u16 vel[3];                 // unit of 1/4096 rpm
     u8  acc[3];                 // 0 for maximum possible acceleration
     int present_pos[3];
     int present_vel[3];
