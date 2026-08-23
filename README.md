@@ -1,7 +1,6 @@
 # CubicDoggo 07B: Homemade 12-DOF 4-Legged Robot Recipe
 
-Cubic Doggo 07B Wouf is upgraded from the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. The goal is to use a stronger servo and improve the structural support to handle the change.
-
+Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. The goal is to use a stronger servo and improve the structural support to handle the change.
 
 ## Ingredients
 
@@ -28,9 +27,9 @@ Other than the M3 screw, one specific requirement is the M2 self-tapping screws,
   * Daisy chain no more than 3 servos to avoid delay
   * Power the servo controller with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity
   * The ground between the 2 controllers should be shared when both are connecting the Rasp Pi with USB
-  * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put a kapton tape to insulate the two boards
+  * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put kapton tape to insulate the two boards
 
-<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/powerSystem.png" height="400"> 
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/powersystem.png" height="400"> 
 
 ## Running a Single Servo on ROS2
 
@@ -84,7 +83,7 @@ To test 2 servos with 2 controllers, or 3 servos daisy chained, redo the connect
     ros2 run my_toolbox_scs_workbench testSpin_servo2controller2
     ros2 run my_toolbox_scs_workbench testSpin_servo3
 
-<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo2controller2.png" height="100"><img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo3.png" height="100">
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo2controller2.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo3.png" height="200">
 
 
 **NOTE:** Record the ``pos_offset`` for each servo independently such that each of their default position is finely aligned.
