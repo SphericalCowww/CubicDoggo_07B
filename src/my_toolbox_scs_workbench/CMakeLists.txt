@@ -7,6 +7,7 @@ endif()
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
@@ -15,8 +16,21 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(hardware_interface REQUIRED)
 find_package(pluginlib REQUIRED)
 
+# publish SCS library
 add_subdirectory(SCServo_Linux/SCServo_Linux_220329/SCServo_Linux)
-
+set_target_properties(SCServo PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "")
+install(
+  DIRECTORY SCServo_Linux/SCServo_Linux_220329/SCServo_Linux/
+  DESTINATION include
+  FILES_MATCHING PATTERN "*.h"
+)
+install(TARGETS SCServo
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+ament_export_libraries(SCServo)
+ament_export_include_directories(include)
 ###########################################################################
 add_executable(scanUpdateID_zeroing src/scanUpdateID_zeroing.cpp)
 target_include_directories(scanUpdateID_zeroing PUBLIC

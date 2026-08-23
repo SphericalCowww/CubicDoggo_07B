@@ -24,12 +24,12 @@ namespace cubic_doggo_namespace {
         }
         RCLCPP_INFO(get_logger(), "hardware_interface:on_init(): st3215 opening port %s and %s at %d baud", 
                                   port_name_front_.c_str(), port_name_back_.c_str(), baud_rate_);
-        if (!sts_wb_[0].begin(baud_rate_, port_name_front_)) {
+        if (!sts_wb_[0].begin(baud_rate_, port_name_front_.c_str())) {
             RCLCPP_ERROR(get_logger(), "hardware_interface:on_init(): failed to open the port %s!",
-                                       port_name_front.c_str());
+                                       port_name_front_.c_str());
             return hardware_interface::CallbackReturn::ERROR;
         }
-        if (!sts_wb_[1].begin(baud_rate_, port_name_back_)) {
+        if (!sts_wb_[1].begin(baud_rate_, port_name_back_.c_str())) {
             RCLCPP_ERROR(get_logger(), "hardware_interface:on_init(): failed to open the port %s!",
                                        port_name_back_.c_str());
             return hardware_interface::CallbackReturn::ERROR;
@@ -112,9 +112,9 @@ namespace cubic_doggo_namespace {
         (void) previous_state;
        
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) initialize_servo_(servo_idx);
-        sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos[0], &sts_vel[0], &sts_acc[0]);
+        sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
         sts_wb_[1].SyncWritePosEx(&servo_channels_[servo_N_/2], servo_N_/2, 
-                                  &sts_pos[servo_N_/2], &sts_vel[servo_N_/2], &sts_acc[servo_N_/2]);
+                                  &sts_pos_[servo_N_/2], &sts_vel_[servo_N_/2], &sts_acc_[servo_N_/2]);
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
             set_state(joint_names[servo_idx]+"/position", rad_pos_[servo_idx]);
         }
@@ -128,9 +128,9 @@ namespace cubic_doggo_namespace {
         (void) previous_state;
 
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) initialize_servo_(servo_idx);
-        sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos[0], &sts_vel[0], &sts_acc[0]);
+        sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
         sts_wb_[1].SyncWritePosEx(&servo_channels_[servo_N_/2], servo_N_/2,
-                                  &sts_pos[servo_N_/2], &sts_vel[servo_N_/2], &sts_acc[servo_N_/2]);
+                                  &sts_pos_[servo_N_/2], &sts_vel_[servo_N_/2], &sts_acc_[servo_N_/2]);
  
         return hardware_interface::CallbackReturn::SUCCESS;
     }
@@ -152,7 +152,7 @@ namespace cubic_doggo_namespace {
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
             rad_pos_[servo_idx] = (double) sts_pos_[servo_idx]*(2.0*M_PI)/(MAX_POSITION+1-MIN_POSITION);
             rad_vel_[servo_idx] = (double) sts_vel_[servo_idx]*(2.0*M_PI)/(MAX_POSITION+1-MIN_POSITION);
-            rad_eff_[servo_idx] = (double) static_cast<int16_t>(sts_eff[servo_idx]); // for Present_Load 
+            rad_eff_[servo_idx] = (double) static_cast<int16_t>(sts_eff_[servo_idx]); // for Present_Load 
             // see: src/my_robot_description/urdf/cubic_doggo.ros2_control.xacro
             set_state(joint_names[servo_idx]+"/position", rad_pos_[servo_idx]);
             set_state(joint_names[servo_idx]+"/velocity", rad_vel_[servo_idx]);
@@ -170,12 +170,12 @@ namespace cubic_doggo_namespace {
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
             rad_pos_[servo_idx] = get_command(joint_names[servo_idx]+"/position");
             if (std::isnan(rad_pos_[servo_idx]) == true) initialize_servo_(servo_idx); 
-            sts_pos_[servo_idx] = static_cast<s16>(std::round(rad_pos_[servo_id]
+            sts_pos_[servo_idx] = static_cast<s16>(std::round(rad_pos_[servo_idx]
                                                              *(MAX_POSITION+1-MIN_POSITION)/(2.0*M_PI)));
         }
-        sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos[0], &sts_vel[0], &sts_acc[0]);
+        sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
         sts_wb_[1].SyncWritePosEx(&servo_channels_[servo_N_/2], servo_N_/2,
-                                  &sts_pos[servo_N_/2], &sts_vel[servo_N_/2], &sts_acc[servo_N_/2]);
+                                  &sts_pos_[servo_N_/2], &sts_vel_[servo_N_/2], &sts_acc_[servo_N_/2]);
 
         return hardware_interface::return_type::OK;
     }
@@ -187,29 +187,21 @@ namespace cubic_doggo_namespace {
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void HardwareInterfaceST3215_cubic_doggo::initialize_servo_(uint8_t servo_id) {
-        rad_pos_[servo_id] = rad_pos_init_[servo_id];
-        sts_pos_[servo_id] =static_cast<s16>(std::round(rad_pos_[servo_id]*(MAX_POSITION+1-MIN_POSITION)/(2.0*M_PI)));
-        rad_vel_[servo_id] = 0.0;
-        sts_vel_[servo_id] = 0;
-        rad_eff_[servo_id] = 0.0;
-        sts_eff_[servo_id] = 0;
+    void HardwareInterfaceST3215_cubic_doggo::initialize_servo_(uint8_t servo_idx) {
+        rad_pos_[servo_idx] = rad_pos_init_[servo_idx];
+        sts_pos_[servo_idx] = static_cast<s16>(std::round(rad_pos_[servo_idx]
+                                              *(MAX_POSITION+1-MIN_POSITION)/(2.0*M_PI)));
+        rad_vel_[servo_idx] = 0.0;
+        sts_vel_[servo_idx] = 0;
+        rad_eff_[servo_idx] = 0.0;
+        sts_eff_[servo_idx] = 0;
     }
-    void HardwareInterfaceST3215_cubic_doggo::read_memory_(uint8_t servo_id) {
-        sts_idx_ = (servo_idx < 6) ? 0 : 1;
-        uint8_t raw_data[6];
-        if (sts_wb_[0].ReadMem(servo_id, 56, raw_data, 6) == 6) {
-            sts_pos_[i]     = *(s16*) &raw_data[0];
-            sts_vel_[i]     = *(s16*) &raw_data[2];
-            sts_efforts_[i] = *(s16*) &raw_data[4];
-        }
-    }    
     void HardwareInterfaceST3215_cubic_doggo::read_controller_range(std::size_t ctrl_idx) {
     std::size_t servo_stard_idx = (ctrl_idx == 0) ? 0 : servo_N_/2;
-    std::size_t servo_end_idx   = start + servo_N_/2;
+    std::size_t servo_end_idx   = servo_stard_idx + servo_N_/2;
     for (std::size_t servo_idx = servo_stard_idx; servo_idx < servo_end_idx; servo_idx++) {
         uint8_t raw_data[6];
-        if (sts_wb_[ctrl_idx].ReadMem(servo_channels_[servo_idx], 56, raw_data, 6) == 6) {
+        if (sts_wb_[ctrl_idx].Read(servo_channels_[servo_idx], 56, raw_data, 6) == 6) {
             sts_pos_[servo_idx] = *(s16*) &raw_data[0];
             sts_vel_[servo_idx] = *(s16*) &raw_data[2];
             sts_eff_[servo_idx] = *(s16*) &raw_data[4];

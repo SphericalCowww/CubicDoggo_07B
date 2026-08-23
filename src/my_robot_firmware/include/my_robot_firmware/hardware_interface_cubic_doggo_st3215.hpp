@@ -3,7 +3,7 @@
 
 #include "hardware_interface/system_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
-#include "my_toolbox_scs_workbench/SCServo.h"
+#include "SCServo.h"
 
 #define MIN_POSITION 0
 #define MAX_POSITION 4095
@@ -50,8 +50,8 @@ namespace cubic_doggo_namespace {
             u8      sts_acc_       [12];
             s16     sts_eff_       [12];
 
-            void initialize_servo_(uint8_t servo_id);
-            void read_controller_range(std::size_t ctrl_idx)
+            void initialize_servo_(uint8_t servo_idx);
+            void read_controller_range(std::size_t ctrl_idx);
     };    
 }
 
