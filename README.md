@@ -16,7 +16,7 @@ Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/Spher
 | capacitor | 1000uF | 2 | rating 25V or higher | 
 | bearings | M3 bearing+<a href="https://www.amazon.de/dp/B01M2ZCLKX">spacer</a>, threaded rod, rod-end bearing | 8, 4, 4, 4 | rod length of 60mm to match the leg length; other dimensions can be accomodated by modifying the CAD |
 | bolts and nuts | | | M3 screws are used throughout, except where required to accommodate the servos and electronic boards; use locknuts |
-| locking washers | [M3](https://www.amazon.de/dp/B09SCQV81D) | | use in case when locknuts are not available; use it along side regular washer: 3D-printed-surface => regular washer => locking washer (bulge faces away from surface) => bolt |
+| locking washers | [M3](https://www.amazon.de/dp/B09SCQV81D) | | use in case when locknuts are not available; use it along side regular washer: 3D-printed surface => regular washer => locking washer (convex side away from the surface) => bolt |
 
 Other than the M3 screw, one specific requirement is the M2 self-tapping screws, specific to 1cm length given 6mm padding, for the servos. Note that the length matters a lot, screw in 1 mm too much can already damage the servo!
 
