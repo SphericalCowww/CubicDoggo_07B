@@ -33,7 +33,7 @@ using namespace std::placeholders;                  // for using _1, _2
 #include <example_interfaces/msg/bool.hpp>
 using ros_string   = example_interfaces::msg::String;
 using ros_array    = example_interfaces::msg::Float64MultiArray;
-using custom_array = my_robot_interface::msg::CubicLeg1PoseTarget.msg;
+using custom_array = my_robot_interface::msg::CubicLeg1PoseTarget;
 using ros_bool     = example_interfaces::msg::Bool;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
