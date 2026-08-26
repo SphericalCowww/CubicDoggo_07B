@@ -1,0 +1,9 @@
+<library path="cubic_leg1_hardware_interface">
+    <class name="cubic_leg1_namespace/HardwareInterfaceST3215_cubic_leg1"
+           type="cubic_leg1_namespace::HardwareInterfaceST3215_cubic_leg1"
+           base_class_type="hardware_interface::SystemInterface">
+        <description>
+            Hardware interface for the base controlling st3215 servos
+        </description>
+    </class>
+</library>

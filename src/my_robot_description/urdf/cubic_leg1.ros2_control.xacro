@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <ros2_control name="cubic_doggo_controller" type="system">
+        <hardware>
+            <!--plugin>mock_components/GenericSystem</plugin-->
+            <plugin>cubic_doggo_namespace/HardwareInterfaceST3215_cubic_leg1</plugin>
+            <param name="servo1_channel_FL">11</param>
+            <param name="servo2_channel_FL">12</param>
+            <param name="servo3_channel_FL">13</param>
+        </hardware>
+        <joint name="servo1_servo1_padding_FL">
+            <command_interface name="position"/>
+            <state_interface name="position">
+              <param name="initial_value">3.14</param>
+            </state_interface>
+            <state_interface name="velocity">
+              <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="effort">
+              <param name="initial_value">0.0</param>
+            </state_interface>
+        </joint>
+        <joint name="servo2_servo2_padding_FL">
+            <command_interface name="position"/>
+            <state_interface name="position">
+              <param name="initial_value">3.14</param>
+            </state_interface>
+            <state_interface name="velocity">
+              <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="effort">
+              <param name="initial_value">0.0</param>
+            </state_interface>
+        </joint>
+        <joint name="servo3_calfFeet_FL">
+            <command_interface name="position"/>
+            <state_interface name="position">
+              <param name="initial_value">3.14</param>
+            </state_interface>
+            <state_interface name="velocity">
+              <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="effort">
+              <param name="initial_value">0.0</param>
+            </state_interface>
+        </joint>
+    </ros2_control>
+</robot>

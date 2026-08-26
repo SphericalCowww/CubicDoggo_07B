@@ -16,6 +16,20 @@ find_package(my_toolbox_scs_workbench REQUIRED)
 include_directories(include)
 
 ###########################################################################
+add_library(cubic_leg1_hardware_interface SHARED
+  src/hardware_interface_cubic_leg1_st3215.cpp
+)
+ament_target_dependencies(cubic_leg1_hardware_interface 
+                          rclcpp 
+                          rclcpp_lifecycle 
+                          hardware_interface 
+                          pluginlib
+                          my_toolbox_scs_workbench)
+pluginlib_export_plugin_description_file(hardware_interface cubic_leg1_hardware_interface.xml)
+install(TARGETS cubic_leg1_hardware_interface
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 add_library(cubic_doggo_hardware_interface SHARED
   src/hardware_interface_cubic_doggo_st3215.cpp
 )
@@ -35,6 +49,7 @@ install(
   DESTINATION include
 ) 
 ament_export_libraries(
+    cubic_leg1_hardware_interface
     cubic_doggo_hardware_interface
 )
 ament_export_dependencies(rclcpp rclcpp_lifecycle hardware_interface pluginlib)
