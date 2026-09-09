@@ -50,6 +50,7 @@ namespace cubic_leg1_namespace {
             u8      sts_acc_       [3];
             s16     sts_eff_       [3];
 
+
             void initialize_servo_(uint8_t servo_idx);
             void read_controller_range(std::size_t ctrl_idx);
     };    

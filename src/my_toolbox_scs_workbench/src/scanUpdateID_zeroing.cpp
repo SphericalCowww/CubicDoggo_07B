@@ -9,8 +9,9 @@ int main() {
     const char* port_name = "/dev/ttyACM0";
     int         baud_rate = 1000000;
 
-    int targetID   = 31;            // set to this ID, -1 to not set
-    int pos_offset = 20;            // offset to the default position, remember to recording it
+    int targetID   = 12;            // set to this ID, -1 to not set
+    int pos_offset = 0;            // offset to the default position, remember to recording it
+    int pos_offset_noEEPROM = 0;
     ///////////////////////////////////////////////////////////////// connect only 1 controller and 1 servo
     SMS_STS sts_wb;
     if(!sts_wb.begin(baud_rate, port_name)){
@@ -36,8 +37,9 @@ int main() {
     ///////////////////////////////////////////////////////////////// change ID
     if (targetID == foundID) targetID = -1;
     if ((foundID != -1) && (targetID != -1)) {
-        std::cout << "scanUpdateID_zeroing(): changing ID "<<foundID<<" to "<<targetID<<"..."<<std::endl;
-        
+        std::cout<<"scanUpdateID_zeroing(): changing ID "<<foundID<<" to "<<targetID<<"..."<<std::endl;
+        std::cout<<"scanUpdateID_zeroing(): updating PID, voltage/current limit"<<"..."<<std::endl; 
+        std::cout<<"scanUpdateID_zeroing(): updating position mode, offset"<<std::endl;
         sts_wb.unLockEprom(foundID);                // unlock EEPROM 
         sts_wb.writeByte(foundID, 5, targetID);     // register 5 for updating ID
         // PID for walking robot
@@ -47,6 +49,12 @@ int main() {
         // voltage limit
         sts_wb.writeByte(targetID, 14, 140);        // upper bound to 14V
         sts_wb.writeByte(targetID, 15, 100);        // lower bound to 10V
+        // current limit: 6.5 mA per unit => 2000mA/6.5 ~ 308
+        sts_wb.writeWord(targetID, 28, 300);
+        // mode: position mode at mode 0
+        sts_wb.writeByte(targetID, 33, 0);
+        // offset
+        sts_wb.writeWord(targetID, 31, pos_offset);
         sts_wb.LockEprom(targetID);                 // lock EEPROM
         usleep(1000000);                            // 1 second for update
 
@@ -70,7 +78,7 @@ int main() {
     int present_load;
     int moving_status;   
  
-    pos[0] = MAXIMUM_POSITION_VALUE/2 + 1 + pos_offset, vel[0] = 100, acc[0] = 10;
+    pos[0] = MAXIMUM_POSITION_VALUE/2 + 1 + pos_offset_noEEPROM, vel[0] = 100, acc[0] = 10;
     sts_wb.SyncWritePosEx(ID, 1, pos, vel, acc);
 	present_pos   = sts_wb.ReadPos(ID[0]);
     present_vel   = sts_wb.ReadSpeed(ID[0]);

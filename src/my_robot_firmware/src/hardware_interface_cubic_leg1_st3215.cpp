@@ -40,6 +40,7 @@ namespace cubic_leg1_namespace {
         rad_pos_init_[0]  = 3.14;                      
         rad_pos_init_[1]  = 2.54;                      //M_PI - M_PI/4.0;
         rad_pos_init_[2]  = 4.14;                      //M_PI - M_PI/8.0;
+
         ///////////
 
 
