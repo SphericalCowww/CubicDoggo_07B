@@ -63,11 +63,12 @@ Download ``ST/SC serial bus servo control library (Python)`` from <a href="https
 
 Download ``ST/SC serial bus servo control library (Linux)`` from <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">link</a>, expand it under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/`` and replace ``src/my_toolbox_scs_workbench/SCServo_Linux/SCServo_Linux_220329/SCServo_Linux/CMakeLists.txt``.
 
+    cd CubicDoggo_07B/
     colcon build --packages-select my_toolbox_scs_workbench --cmake-clean-first
+    source install/setup.bash
 
 To change the servo ID and initialize the servo, connect only 1 controller and 1 servo,
 
-    colcon build --packages-select my_toolbox_scs_workbench --cmake-clean-first
     vim CubicDoggo_07B/src/my_toolbox_scs_workbench/src/scanUpdateID_zeroing.cpp
     # Modify targetID, EEPROM change is only enabled when ID changes 
     # Modify pos_offset_quick, when settled, set pos_offset_quick=0 and set pos_offset accordingly into the EEPROM
@@ -86,10 +87,17 @@ To test 2 servos with 2 controllers, or 3 servos daisy-chained, redo the connect
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo2controller2.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo3.png" height="200">
 
-
 **NOTE:** Record the ``pos_offset`` for each servo independently such that each of their default position is finely aligned.
 
 **NOTE:** ``sts_wb.writeByte``requires unlocking the EEPROM; do NOT do this firmware change too frequently, otherwise it can cause corruption.
+
+### Running a single leg on ROS2
+
+    cd CubicDoggo_07B/
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_bringup cubic_leg1.with_lifecycle.launch.py
+    
 
 ## References:
 
