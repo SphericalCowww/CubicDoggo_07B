@@ -69,7 +69,8 @@ To change the servo ID and initialize the servo, connect only 1 controller and 1
 
     colcon build --packages-select my_toolbox_scs_workbench --cmake-clean-first
     vim CubicDoggo_07B/src/my_toolbox_scs_workbench/src/scanUpdateID_zeroing.cpp
-    # Modify targetID and pos_offset
+    # Modify targetID, EEPROM change is only enabled when ID changes 
+    # Modify pos_offset_quick, when settled, set pos_offset_quick=0 and set pos_offset accordingly into the EEPROM
     ros2 run my_toolbox_scs_workbench scanUpdateID_zeroing
 
 Remember to tune and record the pos_offset to set the servo at the correct default position (halfway between minimal and maximal ticks).
@@ -78,7 +79,7 @@ To test 1 servo again, do,
 
     ros2 run my_toolbox_scs_workbench testSpin_servo1
 
-To test 2 servos with 2 controllers, or 3 servos daisy chained, redo the connection accordingly and do,
+To test 2 servos with 2 controllers, or 3 servos daisy-chained, redo the connection accordingly and do,
 
     ros2 run my_toolbox_scs_workbench testSpin_servo2controller2
     ros2 run my_toolbox_scs_workbench testSpin_servo3
