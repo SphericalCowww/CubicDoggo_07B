@@ -12,7 +12,7 @@ import os
 def generate_launch_description():
     robot_description_path   = get_package_share_path('my_robot_description')
     robot_bringup_path       = get_package_share_path('my_robot_bringup')
-    robot_moveit_config_path = get_package_share_path('my_robot_moveit_config')   
+    robot_moveit_config_path = get_package_share_path('cubic_leg1_moveit_config')   
  
     urdf_path          = os.path.join(robot_description_path,   'urdf',   'cubic_leg1.urdf.xacro')
     robot_controllers  = os.path.join(robot_bringup_path,       'config', 'cubic_leg1_controllers.yaml')
@@ -56,7 +56,7 @@ def generate_launch_description():
     )
     lifecycle_node = Node(
         package="my_robot_commander",
-        executable="my_robot_lifecycle",
+        executable="cubic_leg1_lifecycle",
         parameters=[
             moveit_config.robot_description,           # the URDF math
             moveit_config.robot_description_semantic,  # the SRDF (defines 'leg1')

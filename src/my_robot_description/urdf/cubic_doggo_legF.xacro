@@ -3,9 +3,9 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:macro name="doggo_legF" params="prefix">
 
-    <xacro:property name="servo_x" value="0.0285"/>
-    <xacro:property name="servo_y" value="0.0465"/>
-    <xacro:property name="servo_z" value="0.034"/>
+    <xacro:property name="servo_x" value="0.02473"/>
+    <xacro:property name="servo_y" value="0.04523"/>
+    <xacro:property name="servo_z" value="0.035"/>
     <xacro:if value="${prefix == 'FL'}">
         <xacro:property name="rflc"              value=" 1"/>
         <xacro:property name="base_plate"        value="base_plate_F"/>
@@ -20,18 +20,18 @@
     <link name="servo1_holder_${prefix}">
         <visual>
             <geometry>
-                <mesh filename="package://my_robot_description/mesh/CADv1/XL430holderBasic.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/ST3215holderTop.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="white"/>
             <origin xyz="0 0 0" rpy="0 0 ${urdf_pi/2}"/>
         </visual>
         <collision>
             <geometry>
-                <box size="0.037 0.037 0.014"/>
+                <box size="0.044 0.0328 0.012"/>
             </geometry>
             <origin xyz="0 0 0.007" rpy="0 0 ${urdf_pi/2}"/>
         </collision>
-        <xacro:box_inertia m="0.0098" x="0.037" y="0.037" z="0.014" o_xyz="0 0 0.007" o_rpy="0 0 ${urdf_pi/2}"/>
+        <xacro:box_inertia m="0.0098" x="0.044" y="0.0328" z="0.012" o_xyz="0 0 0.007" o_rpy="0 0 ${urdf_pi/2}"/>
     </link> 
     <joint name="base_plate_servo1_holder_${prefix}" type="fixed">
         <parent link="${base_plate}"/>
@@ -53,7 +53,7 @@
             </geometry>
             <origin xyz="0 0 ${servo_y/2}" rpy="${urdf_pi/2} 0 0"/>
         </collision>
-        <xacro:box_inertia m="0.0572" x="${servo_x}" y="${servo_y}" z="${servo_z}" o_xyz="0 0 ${servo_y/2}" o_rpy="${urdf_pi/2} 0 0"/>
+        <xacro:box_inertia m="0.055" x="${servo_x}" y="${servo_y}" z="${servo_z}" o_xyz="0 0 ${servo_y/2}" o_rpy="${urdf_pi/2} 0 0"/>
     </link> 
     <joint name="servo1_holder_servo1_${prefix}" type="fixed">
         <parent link="servo1_holder_${prefix}"/>
@@ -64,18 +64,18 @@
     <link name="servo1_padding_${prefix}">
         <visual>
             <geometry>
-                <cylinder radius="0.011" length="0.004"/>
+                <cylinder radius="0.01" length="0.004"/>
             </geometry>
             <origin xyz="0 -0.002 0" rpy="${urdf_pi/2} 0 0"/>
             <material name="white"/>
         </visual>
         <collision>
             <geometry>
-                <cylinder radius="0.011" length="0.004"/>
+                <cylinder radius="0.01" length="0.004"/>
             </geometry>
             <origin xyz="0 -0.002 0" rpy="${urdf_pi/2} 0 0"/>
         </collision>
-        <xacro:cylinder_inertia m="0.0013" r="0.011" l="0.004" o_xyz="0 -0.002 0" o_rpy="${urdf_pi/2} 0 0"/>
+        <xacro:cylinder_inertia m="0.0013" r="0.01" l="0.004" o_xyz="0 -0.002 0" o_rpy="${urdf_pi/2} 0 0"/>
     </link> 
     <joint name="servo1_servo1_padding_${prefix}" type="revolute">
         <parent link="servo1_${prefix}"/>
@@ -90,18 +90,18 @@
     <link name="servo2_holder_${prefix}">
         <visual>
             <geometry>
-                <mesh filename="package://my_robot_description/mesh/CADv1/XL430holderBasic.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/ST3215holderBottom.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="white"/>
             <origin xyz="0 0 0" rpy="${urdf_pi/2} 0 0"/>
         </visual>
         <collision>
             <geometry>
-                <box size="0.037 0.037 0.014"/>
+                <box size="0.044 0.0328 0.01"/>
             </geometry>
             <origin xyz="0 -0.007 0" rpy="${urdf_pi/2} 0 0"/>
         </collision>
-        <xacro:box_inertia m="0.0098" x="0.037" y="0.037" z="0.014" o_xyz="0 -0.007 0" o_rpy="${urdf_pi/2} 0 0"/>
+        <xacro:box_inertia m="0.0098" x="0.044" y="0.0328" z="0.01" o_xyz="0 -0.007 0" o_rpy="${urdf_pi/2} 0 0"/>
     </link> 
     <joint name="base_link_servo2_holder_${prefix}" type="fixed">
         <parent link="servo1_padding_${prefix}"/>
@@ -123,7 +123,7 @@
             </geometry>
             <origin xyz="0 ${-servo_y/2} 0" rpy="0 ${rflc*urdf_pi/2} 0"/>
         </collision>
-        <xacro:box_inertia m="0.0572" x="${servo_x}" y="${servo_y}" z="${servo_z}" 
+        <xacro:box_inertia m="0.055" x="${servo_x}" y="${servo_y}" z="${servo_z}" 
                            o_xyz="0 ${-servo_y/2} 0" o_rpy="0 ${rflc*urdf_pi/2} 0"/>
     </link> 
     <joint name="servo2_holder_servo2_${prefix}" type="fixed">
@@ -135,23 +135,23 @@
     <link name="servo2_padding_${prefix}">
         <visual>
             <geometry>
-                <cylinder radius="0.011" length="0.004"/>
+                <cylinder radius="0.01" length="0.004"/>
             </geometry>
             <origin xyz="${rflc*0.002} 0 0" rpy="0 ${urdf_pi/2} 0"/>
             <material name="white"/>
         </visual>
         <collision>
             <geometry>
-                <cylinder radius="0.011" length="0.004"/>
+                <cylinder radius="0.01" length="0.004"/>
             </geometry>
             <origin xyz="${rflc*0.002} 0 0" rpy="0 ${urdf_pi/2} 0"/>
         </collision>
-        <xacro:cylinder_inertia m="0.0013" r="0.011" l="0.004" o_xyz="${rflc*0.002} 0 0" o_rpy="0 ${urdf_pi/2} 0"/>
+        <xacro:cylinder_inertia m="0.0013" r="0.01" l="0.004" o_xyz="${rflc*0.002} 0 0" o_rpy="0 ${urdf_pi/2} 0"/>
     </link> 
     <joint name="servo2_servo2_padding_${prefix}" type="revolute">
         <parent link="servo2_${prefix}"/>
         <child  link="servo2_padding_${prefix}"/>
-        <origin xyz="${rflc*(servo_z/2+0.002)} -0.03525 0" rpy="0 0 0"/>
+        <origin xyz="${rflc*servo_z/2} -0.03525 0" rpy="0 0 0"/>
         <axis xyz="${rflc} 0 0"/>
         <limit effort="1000.0" velocity="50.0" lower="${urdf_pi - 2*urdf_pi/6 - rflc*urdf_pi/6}" 
                                                upper="${urdf_pi + 2*urdf_pi/6 - rflc*urdf_pi/6}"/>
@@ -162,7 +162,7 @@
     <link name="inner_thigh_${prefix}">
         <visual>
             <geometry>
-                <mesh filename="package://my_robot_description/mesh/CADv1/thighInner.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/ST3215thighInner.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="blue"/>
             <origin xyz="0 0 0" rpy="${-rflc*urdf_pi/2} 0 ${-urdf_pi/2}"/>
@@ -185,19 +185,19 @@
     <link name="outer_thigh_${prefix}">
         <visual>
             <geometry>
-                <mesh filename="package://my_robot_description/mesh/CADv1/thighOuter.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/ST3215thighOuter.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="blue"/>
-            <origin xyz="0 0 0" rpy="${-urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
+            <origin xyz="0.006 0 0" rpy="${urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
         </visual>
         <collision>
             <geometry>
                 <box size="0.040 0.032 0.006"/>
             </geometry>
-            <origin xyz="${rflc*0.003} -0.06 0" rpy="${-urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
+            <origin xyz="${rflc*0.003} -0.06 0" rpy="${urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
         </collision>
         <xacro:box_inertia m="0.0113" x="0.040" y="0.032" z="0.006" 
-                           o_xyz="${rflc*0.003} -0.0475 0" o_rpy="${-urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
+                           o_xyz="${rflc*0.003} -0.0475 0" o_rpy="${urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
     </link>
     <joint name="inner_thigh_outer_thigh_${prefix}" type="fixed">
         <parent link="inner_thigh_${prefix}"/>
@@ -219,7 +219,7 @@
             </geometry>
             <origin xyz="0 ${-servo_y/2} 0" rpy="0 ${rflc*urdf_pi/2} 0"/>
         </collision>
-        <xacro:box_inertia m="${0.0572+0.0113+0.0078}" x="${servo_x}" y="${servo_y}" z="${servo_z}" 
+        <xacro:box_inertia m="${0.055+0.0113+0.0078}" x="${servo_x}" y="${servo_y}" z="${servo_z}" 
                            o_xyz="0 ${-servo_y/2} 0" o_rpy="0 ${rflc*urdf_pi/2} 0"/>
     </link>
     <joint name="outer_thigh_servo3_${prefix}" type="fixed">
@@ -231,7 +231,7 @@
     <link name="calfFeet_${prefix}">
         <visual>
             <geometry>
-                <mesh filename="package://my_robot_description/mesh/CADv1/calfFeet.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/calfFeet.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="purple"/>
             <origin xyz="${-0.004} -0.008 0.038" rpy="0 ${urdf_pi/2} 0"/>
@@ -257,19 +257,19 @@
     <link name="calfJoint_${prefix}">
         <visual>
             <geometry>
-                <mesh filename="package://my_robot_description/mesh/CADv1/calfJoint.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/ST3215calfJoint.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="0 0 0" rpy="${urdf_pi/2} 0 ${-rflc*urdf_pi/2}"/>
+            <origin xyz="-0.006 0 0" rpy="${-urdf_pi/2} ${urdf_pi} ${-rflc*urdf_pi/2}"/>
             <material name="white"/>
         </visual>
         <collision>
             <geometry>
                 <box size="0.022 0.053 0.007"/>
             </geometry>
-            <origin xyz="${-rflc*0.0005} 0 0.0155" rpy="${urdf_pi/2} 0 ${-rflc*urdf_pi/2}"/>
+            <origin xyz="${-rflc*0.0025} 0 -0.0155" rpy="${-urdf_pi/2} ${urdf_pi} ${-rflc*urdf_pi/2}"/>
         </collision>
         <xacro:box_inertia m="${0.0047+0.0015}" x="0.022" y="0.053" z="0.007" 
-                           o_xyz="${-rflc*0.0005} 0 0.0155" o_rpy="${urdf_pi/2} 0 ${-rflc*urdf_pi/2}"/>
+                           o_xyz="${-rflc*0.0005} 0 0.0155" o_rpy="${-urdf_pi/2} ${urdf_pi} ${-rflc*urdf_pi/2}"/>
     </link>
     <joint name="servo3_calfJoint_${prefix}" type="revolute">
         <parent link="servo3_${prefix}"/>
@@ -284,23 +284,23 @@
     <link name="calfSphere_${prefix}">
         <visual>
             <geometry>
-                <sphere radius="0.013"/>
+                <sphere radius="0.008"/>
             </geometry>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <material name="dark_purple"/>
         </visual>
         <collision>
             <geometry>
-                <sphere radius="0.011"/>
+                <sphere radius="0.008"/>
             </geometry>
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </collision>
-        <xacro:sphere_inertia m="0.0080" r="0.011" o_xyz="0 0 0" o_rpy="0 0 0"/>
+        <xacro:sphere_inertia m="0.004" r="0.008" o_xyz="0 0 0" o_rpy="0 0 0"/>
     </link>
     <joint name="calfFeet_calfSphere_${prefix}" type="fixed">
         <parent link="calfFeet_${prefix}"/>
         <child  link="calfSphere_${prefix}"/>
-        <origin xyz="0 0.004 ${-0.105+0.035}" rpy="0 0 0"/>
+        <origin xyz="-0.0005 0.002 ${-0.105+0.035}" rpy="0 0 0"/>
     </joint>
     </xacro:macro>
 </robot>
