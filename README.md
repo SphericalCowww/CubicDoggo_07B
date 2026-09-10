@@ -96,6 +96,8 @@ To test 2 servos with 2 controllers, or 3 servos daisy-chained, redo the connect
     cd CubicDoggo_07B/
     colcon build
     source install/setup.bash
+    ros2 launch my_robot_description cubic_leg1.rviz.launch.xacro.py
+    
     ros2 launch my_robot_bringup cubic_leg1.with_lifecycle.launch.py
     
 
