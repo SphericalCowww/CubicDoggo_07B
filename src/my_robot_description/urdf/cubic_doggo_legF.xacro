@@ -188,7 +188,7 @@
                 <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/ST3215thighOuter.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="blue"/>
-            <origin xyz="0.006 0 0" rpy="${urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
+            <origin xyz="${rflc*0.006} 0 0" rpy="${urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
         </visual>
         <collision>
             <geometry>
@@ -259,14 +259,14 @@
             <geometry>
                 <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/ST3215calfJoint.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="-0.006 0 0" rpy="${-urdf_pi/2} ${urdf_pi} ${-rflc*urdf_pi/2}"/>
+            <origin xyz="${-rflc*0.006} 0 0" rpy="${-urdf_pi/2} ${urdf_pi} ${-rflc*urdf_pi/2}"/>
             <material name="white"/>
         </visual>
         <collision>
             <geometry>
                 <box size="0.022 0.053 0.007"/>
             </geometry>
-            <origin xyz="${-rflc*0.0025} 0 -0.0155" rpy="${-urdf_pi/2} ${urdf_pi} ${-rflc*urdf_pi/2}"/>
+            <origin xyz="${-rflc*0.0025} 0 0.0155" rpy="${-urdf_pi/2} 0 ${-rflc*urdf_pi/2}"/>
         </collision>
         <xacro:box_inertia m="${0.0047+0.0015}" x="0.022" y="0.053" z="0.007" 
                            o_xyz="${-rflc*0.0005} 0 0.0155" o_rpy="${-urdf_pi/2} ${urdf_pi} ${-rflc*urdf_pi/2}"/>

@@ -188,7 +188,7 @@
                 <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/ST3215thighOuter.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="blue"/>
-            <origin xyz="0.006 0 0" rpy="${urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
+            <origin xyz="${rflc*0.006} 0 0" rpy="${urdf_pi/2} ${urdf_pi/2-rflc*urdf_pi/2} ${-rflc*urdf_pi/2}"/>
         </visual>
         <collision>
             <geometry>
@@ -259,14 +259,14 @@
             <geometry>
                 <mesh filename="package://my_robot_description/mesh/CADv2_ST-3215-C018/ST3215calfJoint.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin xyz="-0.006 0 0" rpy="${-urdf_pi/2} ${urdf_pi} ${rflc*urdf_pi/2}"/>
+            <origin xyz="${-rflc*0.006} 0 0" rpy="${-urdf_pi/2} 0 ${-rflc*urdf_pi/2}"/>
             <material name="white"/>
         </visual>
         <collision>
             <geometry>
                 <box size="0.022 0.053 0.007"/>
             </geometry>
-            <origin xyz="${-rflc*0.0025} 0 -0.0155" rpy="${-urdf_pi/2} ${urdf_pi} ${-rflc*urdf_pi/2}"/>
+            <origin xyz="${-rflc*0.0025} 0 -0.0155" rpy="${-urdf_pi/2} 0 ${-rflc*urdf_pi/2}"/>
         </collision>
         <xacro:box_inertia m="${0.0047+0.0015}" x="0.022" y="0.053" z="0.007" 
                            o_xyz="${-rflc*0.0005} 0 -0.0155" o_rpy="${-urdf_pi/2} ${urdf_pi} ${-rflc*urdf_pi/2}"/>
@@ -274,7 +274,7 @@
     <joint name="servo3_calfJoint_${prefix}" type="revolute">
         <parent link="servo3_${prefix}"/>
         <child  link="calfJoint_${prefix}"/>
-        <origin xyz="${rflc*(-servo_z/2-0.002-0.0025)} ${-0.01-0.0025/2} 0" rpy="0 0 0"/>
+        <origin xyz="${rflc*(-servo_z/2-0.002-0.0025)} ${-0.01-0.0025/2-0.001} 0" rpy="0 0 0"/>
         <axis xyz="${-rflc} 0 0"/>
         <mimic joint="servo3_calfFeet_${prefix}" multiplier="1.0" offset="0.0"/>
         <limit effort="1000.0" velocity="50.0" lower="${5*urdf_pi/8}" upper="${11*urdf_pi/8}"/>
@@ -300,7 +300,7 @@
     <joint name="calfFeet_calfSphere_${prefix}" type="fixed">
         <parent link="calfFeet_${prefix}"/>
         <child  link="calfSphere_${prefix}"/>
-        <origin xyz="-0.0005 0.002 ${-0.105+0.035}" rpy="0 0 0"/>
+        <origin xyz="0.0005 -0.002 ${-0.105+0.035}" rpy="0 0 0"/>
     </joint>
     </xacro:macro>
 </robot>
