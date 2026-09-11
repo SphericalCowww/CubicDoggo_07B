@@ -91,7 +91,7 @@ To test 2 servos with 2 controllers, or 3 servos daisy-chained, redo the connect
 
 **NOTE:** ``sts_wb.writeByte``requires unlocking the EEPROM; do NOT do this firmware change too frequently, otherwise it can cause corruption.
 
-### Running a single leg on ROS2
+## Running a single leg on ROS2
 
     cd CubicDoggo_07B/
     colcon build
@@ -99,7 +99,15 @@ To test 2 servos with 2 controllers, or 3 servos daisy-chained, redo the connect
     ros2 launch my_robot_description cubic_leg1.rviz.launch.xacro.py
     
     ros2 launch my_robot_bringup cubic_leg1.with_lifecycle.launch.py
-    
+
+## Running full robot
+
+    cd CubicDoggo_07B/
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_description cubic_doggo.rviz.launch.xacro.py
+
+    ros2 launch my_robot_bringup cubic_doggo.with_lifecycle.launch.py
 
 ## References:
 
