@@ -105,6 +105,7 @@ For the lifecycle that controls 1 leg:
     # if hardware is not yet connected, use the mock engine
     ## vim CubicDoggo_07B/src/my_robot_description/urdf/cubic_leg1.ros2_control.xacro
     ### uncomment: <!--plugin>mock_components/GenericSystem</plugin-->
+    ### comment out: <plugin>cubic_doggo_namespace/HardwareInterfaceST3215_cubic_leg1</plugin>
     cd CubicDoggo_07B/
     colcon build
     source install/setup.bash
