@@ -9,9 +9,9 @@ moveit_simple_controller_manager:
   leg1_controller:
     type: FollowJointTrajectory
     joints:
-      - servo1_servo1_padding
-      - servo2_servo2_padding
-      - servo3_calfFeet
+      - servo1_servo1_padding_FL
+      - servo2_servo2_padding_FL
+      - servo3_calfFeet_FL
     action_ns: follow_joint_trajectory
     default: true
 

@@ -17,7 +17,7 @@ def generate_launch_description():
     urdf_path          = os.path.join(robot_description_path,   'urdf',   'cubic_leg1.urdf.xacro')
     robot_controllers  = os.path.join(robot_bringup_path,       'config', 'cubic_leg1_controllers.yaml')
     moveit_config_path = os.path.join(robot_moveit_config_path, 'launch', 'move_group.launch.py')
-    rviz_config_path   = os.path.join(robot_description_path,   'rviz',   'cubic_leg1.urdf_config.rviz')
+    rviz_config_path   = os.path.join(robot_description_path,   'rviz',   'cubic_doggo.urdf_config.rviz')
 
     robot_description = ParameterValue(Command(['xacro ', urdf_path]), value_type=str)
     robot_state_publisher_node = Node(

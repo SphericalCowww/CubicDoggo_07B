@@ -8,22 +8,22 @@ default_acceleration_scaling_factor: 0.1
 # Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
 # Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
 joint_limits:
-  servo1_servo1_padding:
+  servo1_servo1_padding_FL:
     has_velocity_limits: true
     max_velocity: 10.0
     has_acceleration_limits: true
     max_acceleration: 20.0
-  servo2_servo2_padding:
+  servo2_servo2_padding_FL:
     has_velocity_limits: true
     max_velocity: 10.0
     has_acceleration_limits: true
     max_acceleration: 20.0
-  servo3_calfFeet:
+  servo3_calfFeet_FL:
     has_velocity_limits: true
     max_velocity: 10.0
     has_acceleration_limits: true
     max_acceleration: 20.0
-  servo3_calfJoint:
+  servo3_calfJoint_FL:
     has_velocity_limits: true
     max_velocity: 10.0
     has_acceleration_limits: true

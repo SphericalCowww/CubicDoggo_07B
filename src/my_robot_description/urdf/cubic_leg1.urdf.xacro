@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<robot name="cubic_doggo" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="cubic_leg1" xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:include filename="common_properties.xacro"/>
     <xacro:include filename="cubic_doggo_legF.xacro"/>
     <xacro:include filename="cubic_doggo_legB.xacro"/>
-    <xacro:include filename="cubic_doggo.ros2_control.xacro"/>
+    <xacro:include filename="cubic_leg1.ros2_control.xacro"/>
 <!-- ================================================================================================================================== -->
     <link name="world"/>
 

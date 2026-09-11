@@ -427,7 +427,7 @@ private:
     std::atomic<bool> success_{false};
     std::string current_lifecycle_state_ = "state_uninitialized";
     std::string planning_group_          = "leg1";
-    std::string endEffector_link_        = "calfSphere";
+    std::string endEffector_link_        = "calfSphere_FL";
     moveit::core::RobotStatePtr     current_robot_state_;
     geometry_msgs::msg::PoseStamped endEffector_pose_;
     double endEffector_x_ = 0;

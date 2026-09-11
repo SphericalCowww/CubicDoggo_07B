@@ -12,9 +12,9 @@ controller_manager:
 leg1_controller:
   ros__parameters:
     joints:
-      - servo1_servo1_padding
-      - servo2_servo2_padding
-      - servo3_calfFeet
+      - servo1_servo1_padding_FL
+      - servo2_servo2_padding_FL
+      - servo3_calfFeet_FL
     command_interfaces:
       - position
     state_interfaces:
