@@ -15,18 +15,17 @@ namespace cubic_leg1_namespace {
         RCLCPP_INFO(get_logger(), "hardware_interface:on_init()");
 
         try {
-            port_name_front_ = params.hardware_info.hardware_parameters.at("port_name_front");
-            port_name_back_  = params.hardware_info.hardware_parameters.at("port_name_back");
+            port_name_ = params.hardware_info.hardware_parameters.at("port_name");
             baud_rate_ = std::stoi(params.hardware_info.hardware_parameters.at("baud_rate"));
         } catch (const std::out_of_range& errorMsg) {
             RCLCPP_ERROR(get_logger(), "hardware_interface:on_init(): missing required parameter in URDF");
             return hardware_interface::CallbackReturn::ERROR;
         }
         RCLCPP_INFO(get_logger(), "hardware_interface:on_init(): st3215 opening port %s and %s at %d baud", 
-                                  port_name_front_.c_str(), port_name_back_.c_str(), baud_rate_);
-        if (!sts_wb_[0].begin(baud_rate_, port_name_front_.c_str())) {
+                                  port_name_.c_str(), baud_rate_);
+        if (!sts_wb_[0].begin(baud_rate_, port_name_.c_str())) {
             RCLCPP_ERROR(get_logger(), "hardware_interface:on_init(): failed to open the port %s!",
-                                       port_name_front_.c_str());
+                                       port_name_.c_str());
             return hardware_interface::CallbackReturn::ERROR;
         }
 

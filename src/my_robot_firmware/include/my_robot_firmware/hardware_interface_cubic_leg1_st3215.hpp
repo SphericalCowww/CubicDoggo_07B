@@ -27,8 +27,7 @@ namespace cubic_leg1_namespace {
                 on_deactivate(const rclcpp_lifecycle::State &previous_state) override;
             virtual ~HardwareInterfaceST3215_cubic_leg1();
         private:
-            std::string port_name_front_;
-            std::string port_name_back_;
+            std::string port_name_;
             int         baud_rate_;
 
             SMS_STS sts_wb_[1];
