@@ -93,12 +93,34 @@ To test 2 servos with 2 controllers, or 3 servos daisy-chained, redo the connect
 
 ## Running a single leg on ROS2
 
+For initial rViz check:
+
     cd CubicDoggo_07B/
     colcon build
     source install/setup.bash
     ros2 launch my_robot_description cubic_leg1.rviz.launch.xacro.py
-    
+
+For the lifecycle that controls 1 leg:
+
+    # if hardware is not yet connected, use the mock engine
+    ## vim CubicDoggo_07B/src/my_robot_description/urdf/cubic_leg1.ros2_control.xacro
+    ### uncomment: <!--plugin>mock_components/GenericSystem</plugin-->
+    cd CubicDoggo_07B/
+    colcon build
+    source install/setup.bash
     ros2 launch my_robot_bringup cubic_leg1.with_lifecycle.launch.py
+    # if no config loaded
+    ## Fixed Frame: base_link
+    ## Add: RobotModel
+    ## RobotModel: Description Topic: /robot_description
+    # on another terminal
+    ros2 topic pub -1 /leg1_set_named example_interfaces/msg/String "{data: "pose1"}"
+    ros2 topic pub -1 /leg1_set_joint example_interfaces/msg/Float64MultiArray "{data: [3.14, 3.14, 3.14]}"
+    ros2 topic pub -1 /leg1_set_pose my_robot_interface/msg/CubicLeg1PoseTarget "{x: -0.092, y: 0.053, z: 0.135, use_cartesian_path: false}" 
+    ros2 service call /leg1_walk_toggle std_srvs/srv/SetBool "{data: true}"     # IK very easy to fail
+    ros2 service call /leg1_walk_toggle std_srvs/srv/SetBool "{data: false}"
+    ros2 lifecycle set /cubic_leg1_lifecycle deactivate
+    ros2 lifecycle set /cubic_leg1_lifecycle shutdown
 
 ## Running full robot
 
