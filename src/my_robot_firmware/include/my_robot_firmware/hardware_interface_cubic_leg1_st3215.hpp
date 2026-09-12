@@ -30,7 +30,7 @@ namespace cubic_leg1_namespace {
             std::string port_name_;
             int         baud_rate_;
 
-            SMS_STS sts_wb_[1];
+            SMS_STS sts_wb_;
             std::size_t sts_idx_ = 0;
 
             bool write_first_call_ = true;
@@ -48,10 +48,10 @@ namespace cubic_leg1_namespace {
             u16     sts_vel_       [3];
             u8      sts_acc_       [3];
             s16     sts_eff_       [3];
-
+            s16     sts_range_ = MAX_POSITION + 1 - MIN_POSITION;
 
             void initialize_servo_(uint8_t servo_idx);
-            void read_controller_range(std::size_t ctrl_idx);
+            void read_controller_range();
     };    
 }
 

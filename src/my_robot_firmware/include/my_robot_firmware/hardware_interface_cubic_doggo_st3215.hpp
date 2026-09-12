@@ -32,7 +32,6 @@ namespace cubic_doggo_namespace {
             int         baud_rate_;
 
             SMS_STS sts_wb_[2];
-            std::size_t sts_idx_ = 0;
 
             bool write_first_call_ = true;
             rclcpp::Time start_time_;
@@ -49,9 +48,10 @@ namespace cubic_doggo_namespace {
             u16     sts_vel_       [12];
             u8      sts_acc_       [12];
             s16     sts_eff_       [12];
+            s16     sts_range_ = MAX_POSITION + 1 - MIN_POSITION;
 
             void initialize_servo_(uint8_t servo_idx);
-            void read_controller_range(std::size_t ctrl_idx);
+            void read_controller_range(std::size_t sts_idx);
     };    
 }
 

@@ -1,6 +1,5 @@
 #include <iostream>
 #include <chrono>
-#include <thread>
 #include "rclcpp/rclcpp.hpp"
 #include "my_robot_firmware/hardware_interface_cubic_leg1_st3215.hpp"
 
@@ -21,18 +20,18 @@ namespace cubic_leg1_namespace {
             RCLCPP_ERROR(get_logger(), "hardware_interface:on_init(): missing required parameter in URDF");
             return hardware_interface::CallbackReturn::ERROR;
         }
-        RCLCPP_INFO(get_logger(), "hardware_interface:on_init(): st3215 opening port %s and %s at %d baud", 
+        RCLCPP_INFO(get_logger(), "hardware_interface:on_init(): st3215 opening port %s at %d baud", 
                                   port_name_.c_str(), baud_rate_);
-        if (!sts_wb_[0].begin(baud_rate_, port_name_.c_str())) {
+        if (!sts_wb_.begin(baud_rate_, port_name_.c_str())) {
             RCLCPP_ERROR(get_logger(), "hardware_interface:on_init(): failed to open the port %s!",
                                        port_name_.c_str());
             return hardware_interface::CallbackReturn::ERROR;
         }
 
         /////////// see: src/my_robot_description/urdf/cubic_leg1.ros2_control.xacro
-        servo_channels_[0]  = std::stoi(params.hardware_info.hardware_parameters.at("servo1_channel_FL"));
-        servo_channels_[1]  = std::stoi(params.hardware_info.hardware_parameters.at("servo2_channel_FL"));
-        servo_channels_[2]  = std::stoi(params.hardware_info.hardware_parameters.at("servo3_channel_FL"));
+        servo_channels_[0] = std::stoi(params.hardware_info.hardware_parameters.at("servo1_channel_FL"));
+        servo_channels_[1] = std::stoi(params.hardware_info.hardware_parameters.at("servo2_channel_FL"));
+        servo_channels_[2] = std::stoi(params.hardware_info.hardware_parameters.at("servo3_channel_FL"));
         joint_names = {"servo1_servo1_padding_FL", 
                        "servo2_servo2_padding_FL", 
                        "servo3_calfFeet_FL"};
@@ -52,8 +51,7 @@ namespace cubic_leg1_namespace {
         (void) previous_state;
         
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
-            sts_idx_ = (servo_idx < 6) ? 0 : 1;
-            if (!sts_wb_[sts_idx_].Ping(servo_channels_[servo_idx])) {
+            if (!sts_wb_.Ping(servo_channels_[servo_idx])) {
                 RCLCPP_ERROR(get_logger(), "hardware_interface:on_configure(): failed to ping!");
                 return hardware_interface::CallbackReturn::ERROR;
             } else {
@@ -61,7 +59,7 @@ namespace cubic_leg1_namespace {
                                           servo_channels_[servo_idx]);
             }
             // torque enable
-            if (!sts_wb_[sts_idx_].EnableTorque(servo_channels_[servo_idx], 1)) {
+            if (!sts_wb_.EnableTorque(servo_channels_[servo_idx], 1)) {
                 RCLCPP_ERROR(get_logger(), "hardware_interface:on_configure(): failed to enable torque!");
                 return hardware_interface::CallbackReturn::ERROR;
             } else {
@@ -78,7 +76,7 @@ namespace cubic_leg1_namespace {
         (void) previous_state;
        
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) initialize_servo_(servo_idx);
-        sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
+        sts_wb_.SyncWritePosEx(&servo_channels_[0], servo_N_, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
             set_state(joint_names[servo_idx]+"/position", rad_pos_[servo_idx]);
         }
@@ -92,7 +90,7 @@ namespace cubic_leg1_namespace {
         (void) previous_state;
 
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) initialize_servo_(servo_idx);
-        sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
+        sts_wb_.SyncWritePosEx(&servo_channels_[0], servo_N_, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
         
         return hardware_interface::CallbackReturn::SUCCESS;
     }
@@ -108,11 +106,10 @@ namespace cubic_leg1_namespace {
         }
         rclcpp::Duration lifetime = time - start_time_;
     
-        std::thread thread0(&HardwareInterfaceST3215_cubic_leg1::read_controller_range, this, 0);
-        thread0.join();
+        read_controller_range();
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
-            rad_pos_[servo_idx] = (double) sts_pos_[servo_idx]*(2.0*M_PI)/(MAX_POSITION+1-MIN_POSITION);
-            rad_vel_[servo_idx] = (double) sts_vel_[servo_idx]*(2.0*M_PI)/(MAX_POSITION+1-MIN_POSITION);
+            rad_pos_[servo_idx] = (double) (sts_range_-sts_pos_[servo_idx])*(2.0*M_PI)/sts_range_;
+            rad_vel_[servo_idx] = (double) -sts_vel_[servo_idx]            *(2.0*M_PI)/sts_range_;
             rad_eff_[servo_idx] = (double) static_cast<int16_t>(sts_eff_[servo_idx]); // for Present_Load 
             // see: src/my_robot_description/urdf/cubic_leg1.ros2_control.xacro
             set_state(joint_names[servo_idx]+"/position", rad_pos_[servo_idx]);
@@ -131,36 +128,31 @@ namespace cubic_leg1_namespace {
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
             rad_pos_[servo_idx] = get_command(joint_names[servo_idx]+"/position");
             if (std::isnan(rad_pos_[servo_idx]) == true) initialize_servo_(servo_idx); 
-            sts_pos_[servo_idx] = static_cast<s16>(std::round(rad_pos_[servo_idx]
-                                                             *(MAX_POSITION+1-MIN_POSITION)/(2.0*M_PI)));
+            sts_pos_[servo_idx] = static_cast<s16>(std::round((2.0*M_PI-rad_pos_[servo_idx])*sts_range_/(2.0*M_PI)));
         }
-        sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
+        sts_wb_.SyncWritePosEx(&servo_channels_[0], servo_N_, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
 
         return hardware_interface::return_type::OK;
     }
     HardwareInterfaceST3215_cubic_leg1::~HardwareInterfaceST3215_cubic_leg1()
     {
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
-            sts_idx_ = (servo_idx < 6) ? 0 : 1;
-            sts_wb_[sts_idx_].EnableTorque(servo_channels_[servo_idx], 0);
+            sts_wb_.EnableTorque(servo_channels_[servo_idx], 0);
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void HardwareInterfaceST3215_cubic_leg1::initialize_servo_(uint8_t servo_idx) {
         rad_pos_[servo_idx] = rad_pos_init_[servo_idx];
-        sts_pos_[servo_idx] = static_cast<s16>(std::round(rad_pos_[servo_idx]
-                                              *(MAX_POSITION+1-MIN_POSITION)/(2.0*M_PI)));
+        sts_pos_[servo_idx] = static_cast<s16>(std::round((2.0*M_PI-rad_pos_[servo_idx])*sts_range_/(2.0*M_PI)));
         rad_vel_[servo_idx] = 0.0;
         sts_vel_[servo_idx] = 0;
         rad_eff_[servo_idx] = 0.0;
         sts_eff_[servo_idx] = 0;
     }
-    void HardwareInterfaceST3215_cubic_leg1::read_controller_range(std::size_t ctrl_idx) {
-    std::size_t servo_stard_idx = (ctrl_idx == 0) ? 0 : servo_N_/2;
-    std::size_t servo_end_idx   = servo_stard_idx + servo_N_/2;
-    for (std::size_t servo_idx = servo_stard_idx; servo_idx < servo_end_idx; servo_idx++) {
+    void HardwareInterfaceST3215_cubic_leg1::read_controller_range() {
+    for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
         uint8_t raw_data[6];
-        if (sts_wb_[ctrl_idx].Read(servo_channels_[servo_idx], 56, raw_data, 6) == 6) {
+        if (sts_wb_.Read(servo_channels_[servo_idx], 56, raw_data, 6) == 6) {
             sts_pos_[servo_idx] = *(s16*) &raw_data[0];
             sts_vel_[servo_idx] = *(s16*) &raw_data[2];
             sts_eff_[servo_idx] = *(s16*) &raw_data[4];

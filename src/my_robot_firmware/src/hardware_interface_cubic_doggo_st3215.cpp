@@ -86,8 +86,8 @@ namespace cubic_doggo_namespace {
         (void) previous_state;
         
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
-            sts_idx_ = (servo_idx < 6) ? 0 : 1;
-            if (!sts_wb_[sts_idx_].Ping(servo_channels_[servo_idx])) {
+            std::size_t sts_idx = (servo_idx < 6) ? 0 : 1;
+            if (!sts_wb_[sts_idx].Ping(servo_channels_[servo_idx])) {
                 RCLCPP_ERROR(get_logger(), "hardware_interface:on_configure(): failed to ping!");
                 return hardware_interface::CallbackReturn::ERROR;
             } else {
@@ -95,7 +95,7 @@ namespace cubic_doggo_namespace {
                                           servo_channels_[servo_idx]);
             }
             // torque enable
-            if (!sts_wb_[sts_idx_].EnableTorque(servo_channels_[servo_idx], 1)) {
+            if (!sts_wb_[sts_idx].EnableTorque(servo_channels_[servo_idx], 1)) {
                 RCLCPP_ERROR(get_logger(), "hardware_interface:on_configure(): failed to enable torque!");
                 return hardware_interface::CallbackReturn::ERROR;
             } else {
@@ -150,8 +150,8 @@ namespace cubic_doggo_namespace {
         std::thread thread1(&HardwareInterfaceST3215_cubic_doggo::read_controller_range, this, 1);
         thread0.join(); thread1.join();
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
-            rad_pos_[servo_idx] = (double) sts_pos_[servo_idx]*(2.0*M_PI)/(MAX_POSITION+1-MIN_POSITION);
-            rad_vel_[servo_idx] = (double) sts_vel_[servo_idx]*(2.0*M_PI)/(MAX_POSITION+1-MIN_POSITION);
+            rad_pos_[servo_idx] = (double) (sts_range_-sts_pos_[servo_idx])*(2.0*M_PI)/sts_range_;
+            rad_vel_[servo_idx] = (double) -sts_vel_[servo_idx]            *(2.0*M_PI)/sts_range_;
             rad_eff_[servo_idx] = (double) static_cast<int16_t>(sts_eff_[servo_idx]); // for Present_Load 
             // see: src/my_robot_description/urdf/cubic_doggo.ros2_control.xacro
             set_state(joint_names[servo_idx]+"/position", rad_pos_[servo_idx]);
@@ -170,8 +170,7 @@ namespace cubic_doggo_namespace {
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
             rad_pos_[servo_idx] = get_command(joint_names[servo_idx]+"/position");
             if (std::isnan(rad_pos_[servo_idx]) == true) initialize_servo_(servo_idx); 
-            sts_pos_[servo_idx] = static_cast<s16>(std::round(rad_pos_[servo_idx]
-                                                             *(MAX_POSITION+1-MIN_POSITION)/(2.0*M_PI)));
+            sts_pos_[servo_idx] =static_cast<s16>(std::round((2.0*M_PI-rad_pos_[servo_idx])*sts_range_/(2.0*M_PI)));
         }
         sts_wb_[0].SyncWritePosEx(&servo_channels_[0], servo_N_/2, &sts_pos_[0], &sts_vel_[0], &sts_acc_[0]);
         sts_wb_[1].SyncWritePosEx(&servo_channels_[servo_N_/2], servo_N_/2,
@@ -182,26 +181,25 @@ namespace cubic_doggo_namespace {
     HardwareInterfaceST3215_cubic_doggo::~HardwareInterfaceST3215_cubic_doggo()
     {
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
-            sts_idx_ = (servo_idx < 6) ? 0 : 1;
-            sts_wb_[sts_idx_].EnableTorque(servo_channels_[servo_idx], 0);
+            std::size_t sts_idx = (servo_idx < 6) ? 0 : 1;
+            sts_wb_[sts_idx].EnableTorque(servo_channels_[servo_idx], 0);
         }
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void HardwareInterfaceST3215_cubic_doggo::initialize_servo_(uint8_t servo_idx) {
         rad_pos_[servo_idx] = rad_pos_init_[servo_idx];
-        sts_pos_[servo_idx] = static_cast<s16>(std::round(rad_pos_[servo_idx]
-                                              *(MAX_POSITION+1-MIN_POSITION)/(2.0*M_PI)));
+        sts_pos_[servo_idx] = static_cast<s16>(std::round((2.0*M_PI-rad_pos_[servo_idx])*sts_range_/(2.0*M_PI)));
         rad_vel_[servo_idx] = 0.0;
         sts_vel_[servo_idx] = 0;
         rad_eff_[servo_idx] = 0.0;
         sts_eff_[servo_idx] = 0;
     }
-    void HardwareInterfaceST3215_cubic_doggo::read_controller_range(std::size_t ctrl_idx) {
-    std::size_t servo_stard_idx = (ctrl_idx == 0) ? 0 : servo_N_/2;
-    std::size_t servo_end_idx   = servo_stard_idx + servo_N_/2;
-    for (std::size_t servo_idx = servo_stard_idx; servo_idx < servo_end_idx; servo_idx++) {
+    void HardwareInterfaceST3215_cubic_doggo::read_controller_range(std::size_t sts_idx) {
+    std::size_t servo_start_idx = (sts_idx == 0) ? 0 : servo_N_/2;
+    std::size_t servo_end_idx   = servo_start_idx + servo_N_/2;
+    for (std::size_t servo_idx = servo_start_idx; servo_idx < servo_end_idx; servo_idx++) {
         uint8_t raw_data[6];
-        if (sts_wb_[ctrl_idx].Read(servo_channels_[servo_idx], 56, raw_data, 6) == 6) {
+        if (sts_wb_[sts_idx].Read(servo_channels_[servo_idx], 56, raw_data, 6) == 6) {
             sts_pos_[servo_idx] = *(s16*) &raw_data[0];
             sts_vel_[servo_idx] = *(s16*) &raw_data[2];
             sts_eff_[servo_idx] = *(s16*) &raw_data[4];
