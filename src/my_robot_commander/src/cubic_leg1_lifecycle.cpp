@@ -240,20 +240,15 @@ private:
         pose_0.position.z = z0;
 
         geometry_msgs::msg::Pose pose_1 = pose_0;
-        pose_1.position.y = y0 + 2*traj_arc_rad;
-
-        geometry_msgs::msg::Pose pose_2 = pose_0;
-        pose_2.position.y = y0 + traj_arc_rad;
-        pose_2.position.z = z0 - traj_arc_rad;
+        pose_1.position.y = y0 + traj_arc_rad;
+        pose_1.position.z = z0 - traj_arc_rad;
 
         loadCurrentRobotState_();
         auto joint_model_group = current_robot_state_->getJointModelGroup(planning_group_);
         moveit::core::RobotState state_0(*current_robot_state_);
         moveit::core::RobotState state_1(*current_robot_state_);
-        moveit::core::RobotState state_2(*current_robot_state_);
         success_ = state_0.setFromIK(joint_model_group, pose_0)
-                  &state_1.setFromIK(joint_model_group, pose_1)
-                  &state_2.setFromIK(joint_model_group, pose_2);
+                  &state_1.setFromIK(joint_model_group, pose_1);
         if (success_ == false) {
             RCLCPP_ERROR(get_logger(), "walkingLoop_(): IK failed");
             return;
@@ -263,7 +258,6 @@ private:
                                                                         planning_group_);
         traj->addSuffixWayPoint(state_0, 0.0);
         traj->addSuffixWayPoint(state_1, 0.0);
-        traj->addSuffixWayPoint(state_2, 0.0);
         //traj->addSuffixWayPoint(state_0, 0.0);
 
         trajectory_processing::TimeOptimalTrajectoryGeneration traj_gen;
@@ -324,10 +318,10 @@ private:
             RCLCPP_INFO(get_logger(), "walkingLoop_(): current end effector (x, y, z) = (%lf, %lf, %lf)",
                         endEffector_x_, endEffector_y_, endEffector_z_);
 
-            double x0 = -0.09;
-            double y0 =  0.01;
-            double z0 =  0.13;
-            double traj_arc_rad = 0.04;
+            double x0 = 0.09;
+            double y0 = 0.14;
+            double z0 = 0.14;
+            double traj_arc_rad = 0.03;
 
             geometry_msgs::msg::Pose pose_0 = endEffector_pose_.pose;
             pose_0.position.x = x0;
@@ -335,20 +329,15 @@ private:
             pose_0.position.z = z0;
 
             geometry_msgs::msg::Pose pose_1 = pose_0;
-            pose_1.position.y = y0 + 2*traj_arc_rad;
-
-            geometry_msgs::msg::Pose pose_2 = pose_0;
-            pose_2.position.y = y0 + traj_arc_rad;
-            pose_2.position.z = z0 - traj_arc_rad;
+            pose_1.position.y = y0 + traj_arc_rad;
+            pose_1.position.z = z0 - traj_arc_rad;
 
             auto joint_model_group = current_robot_state_->getJointModelGroup(planning_group_);
             moveit::core::RobotState state_0(*current_robot_state_);
             moveit::core::RobotState state_1(*current_robot_state_);
-            moveit::core::RobotState state_2(*current_robot_state_);
 
             success_ = state_0.setFromIK(joint_model_group, pose_0) 
-                      &state_1.setFromIK(joint_model_group, pose_1)
-                      &state_2.setFromIK(joint_model_group, pose_2);
+                      &state_1.setFromIK(joint_model_group, pose_1);
             if (success_ == false) {
                 RCLCPP_ERROR(get_logger(), "walkingLoop_(): IK failed");
                 continue; 
@@ -358,7 +347,6 @@ private:
                                                                             planning_group_);
             traj->addSuffixWayPoint(state_0, 0.0);
             traj->addSuffixWayPoint(state_1, 0.0);
-            traj->addSuffixWayPoint(state_2, 0.0);
             //traj->addSuffixWayPoint(state_0, 0.0);
 
             trajectory_processing::TimeOptimalTrajectoryGeneration traj_gen;
