@@ -118,7 +118,7 @@ For the lifecycle that controls 1 leg:
     ros2 topic pub -1 /leg1_set_named example_interfaces/msg/String "{data: "pose1"}"
     ros2 topic pub -1 /leg1_set_joint example_interfaces/msg/Float64MultiArray "{data: [3.14, 3.14, 3.14]}"
     # record read position 
-    ros2 topic pub -1 /leg1_set_pose my_robot_interface/msg/CubicLeg1PoseTarget "{x: 0.09, y: 0.15, z: 0.15, use_cartesian_path: false}"
+    ros2 topic pub -1 /leg1_set_pose my_robot_interface/msg/CubicLeg1PoseTarget "{x: 0.09, y: 0.14, z: 0.14, use_cartesian_path: false}"
     ros2 service call /leg1_walk_toggle std_srvs/srv/SetBool "{data: true}"     # IK very easy to fail
     ros2 service call /leg1_walk_toggle std_srvs/srv/SetBool "{data: false}"
     ros2 lifecycle set /cubic_leg1_lifecycle deactivate
