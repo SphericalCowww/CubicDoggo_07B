@@ -74,6 +74,10 @@ To change the servo ID and initialize the servo, connect only 1 controller and 1
     # Modify pos_offset_quick, when settled, set pos_offset_quick=0 and set pos_offset accordingly into the EEPROM
     ros2 run my_toolbox_scs_workbench scanUpdateID_zeroing
 
+Or connect all the servos with IDs listed, update all their EEPROM at once with
+
+    ros2 run my_toolbox_scs_workbench scanUpdateAll_zeroing
+
 Remember to tune and record the pos_offset to set the servo at the correct default position (halfway between minimal and maximal ticks).
 
 To test 1 servo again, do,
