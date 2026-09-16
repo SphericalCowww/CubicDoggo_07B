@@ -78,6 +78,8 @@ Or connect all the servos with IDs listed, update all their EEPROM at once with
 
     ros2 run my_toolbox_scs_workbench scanUpdateAll_zeroing
 
+**WARNING: DO NOT CTRL-C FOR THESE EEPROM PROCESSES**
+
 Remember to tune and record the pos_offset to set the servo at the correct default position (halfway between minimal and maximal ticks).
 
 To test 1 servo again, do,
