@@ -10,7 +10,7 @@ int main() {
 
     const char* port_name = "/dev/ttyACM0";
     u8  servoIDs   [3] = {11, 12, 13};
-    s16 pos_offsets[3] = { 0,  0,  0};
+    s16 pos_offsets[3] = {40, 20, 50};
     /////////////////////////////////////////////////////////////////
     SMS_STS sts_wb;
     if(!sts_wb.begin(baud_rate, port_name)){
@@ -18,9 +18,9 @@ int main() {
         return 0;
     }
     /////////////////////////////////////////////////////////////////
-    for (int IDidx = 0; IDidx < std::size(servoIDs); IDidx++) {
+    for (std::size_t IDidx = 0; IDidx < std::size(servoIDs); IDidx++) {
         u8 servoID = servoIDs[IDidx];
-        std::cout<<"scanUpdateAll_zeroing(): loading EEPROM for servo ID "<<servoID<<std::endl;
+        std::cout<<"scanUpdateAll_zeroing(): loading EEPROM for servo ID "<<int(servoID)<<std::endl;
         sts_wb.unLockEprom(servoID);                // unlock EEPROM 
         std::cout<<"scanUpdateAll_zeroing(): updating PID, voltage/current limit"<<std::endl;
         // PID for walking robot
@@ -65,7 +65,7 @@ int main() {
         usleep(3000*1000);
         ///////////////////////////////////////////////////////////////// which error state?
         int errorState = sts_wb.readByte(servoID, 65);
-        std::cout<<"scanUpdateID_zeroing(): error register: "<<errorState<<std::endl;
+        std::cout<<"scanUpdateID_zeroing(): error register: "<<errorState<<std::endl<<std::endl;
     }
     sts_wb.end();
     return 0;
