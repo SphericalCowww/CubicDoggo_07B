@@ -24,14 +24,14 @@ int main() {
         sts_wb.unLockEprom(servoID);                // unlock EEPROM 
         std::cout<<"scanUpdateAll_zeroing(): updating PID, voltage/current limit"<<std::endl;
         // PID for walking robot
-        sts_wb.writeByte(servoID, 21, 50);         // P
+        sts_wb.writeByte(servoID, 21, 100);         // P
         sts_wb.writeByte(servoID, 23, 0);          // I
         sts_wb.writeByte(servoID, 22, 40);         // D
         // voltage limit
         sts_wb.writeByte(servoID, 14, 140);        // upper bound to 14V
         sts_wb.writeByte(servoID, 15, 100);        // lower bound to 10V
         // current limit: 6.5 mA per unit => 2000mA/6.5 ~ 308
-        sts_wb.writeWord(servoID, 28, 300);
+        sts_wb.writeWord(servoID, 28, 400);
         std::cout<<"scanUpdateAll_zeroing(): updating position mode, offset"<<std::endl;
         // mode: position mode at mode 0
         sts_wb.writeByte(servoID, 33, 0);
