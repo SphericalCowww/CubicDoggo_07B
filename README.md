@@ -12,7 +12,7 @@ Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/Spher
 | driver board | <a href="https://eckstein-shop.de/WaveShare-Serial-Bus-Servo-Driver-Board-for-ST-SC-Serial-Bus-Servos-EN">servo driver</a> | 2 | Ccontrol and power the servos in daisy chain |
 | onboard computer | Raspberry Pi 5 | 1 | For running just IK, a small RAM is sufficient; Pi 4 could be good enough as long as ROS2 Jazzy can be installed | 
 | DC-DC step-down converter | Hailege <a href="https://www.amazon.de/Hailege-Module-Step-Down-Supply-Converter/dp/B07XFMMY1F">24V/12V to 5V/5A</a> | 1 | USB Port port to RaspPi,  DC 5.5mm x 2.5mm Male to battery | 
-| battery | ZYGY <a href="https://www.amazon.de/dp/B0BB6RMM5Q">11.1V 2000mAh</a> | 2 | They already include protection. Need Charger. Need adapters for: T-plug => XT60 Male => DC 5.5mm x 2.5mm Male | 
+| battery | ZYGY <a href="https://www.amazon.de/dp/B0BB6RMM5Q">11.1V 2000mAh</a> | 2 | They already include protection. Need Charger. Need adapters for: T-plug => XT60 Male => DC 5.5mm x 2.5mm Male. Also recommend [toggle switches](https://www.amazon.de/-/en/gp/product/B0CX8TRQ35) to be soldered on the T-plugs  | 
 | capacitor | 1000uF | 2 | rating 25V or higher | 
 | bearings | M3 bearing+<a href="https://www.amazon.de/dp/B01M2ZCLKX">spacer</a>, threaded rod, rod-end bearing | 8, 4, 4, 4 | rod length of 60mm to match the leg length; other dimensions can be accomodated by modifying the CAD |
 | bolts and nuts | | | M3 screws are used throughout, except where required to accommodate the servos and electronic boards; use locknuts |
@@ -24,12 +24,13 @@ Other than the M3 screw, one specific requirement is the M2 self-tapping screws,
 
 ### Power system
 
-  * Daisy chain no more than 3 servos to avoid delay
-  * Power the servo controller with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity
+  * Daisy chain no more than 3 servos to avoid excessive current
+  * T-plugs are soldered to the bottom of the screw terminal of the driver boards. Adding a toggle switch to each of the T-plugs between the driver board and the battery is recommended because the boards don't have power switches. Search for 12V, 20A requirement for the toggle switches.
+  * Power the servo controller with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity (shown in the right photo)
   * The ground between the 2 controllers should be shared when both are connecting the Rasp Pi with USB
-  * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put kapton tape to insulate the two boards
+  * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put Kapton tape to insulate the two boards
 
-<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/powersystem.png" height="400"> 
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_powersystem1.png" height="400"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_powersystem2.png" height="400"> 
 
 ## Running a Single Servo on ROS2
 
@@ -129,6 +130,8 @@ For the lifecycle that controls 1 leg:
     ros2 service call /leg1_walk_toggle std_srvs/srv/SetBool "{data: false}"
     ros2 lifecycle set /cubic_leg1_lifecycle deactivate
     ros2 lifecycle set /cubic_leg1_lifecycle shutdown
+
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_1leg.webp" height="400">
 
 ## Running full robot
 
