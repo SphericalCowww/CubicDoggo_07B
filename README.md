@@ -32,11 +32,13 @@ Other than the M3 screw, one specific requirement is the M2 self-tapping screws,
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_powersystem1.png" height="400"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_powersystem2.png" height="400"> 
 
-## Running a Single Servo on ROS2
+## Running servos
 
-<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo1.png" height="200">
+Install ROS2 Jazzy according to [GitHub](https://github.com/SphericalCowww/ROS_init_practice).
 
 ### Testing with Python library
+
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo1.png" height="200">
 
 Plug in the device:
 
@@ -98,7 +100,7 @@ To test 2 servos with 2 controllers, or 3 servos daisy-chained, redo the connect
 
 **NOTE:** ``sts_wb.writeByte``requires unlocking the EEPROM; do NOT do this firmware change too frequently, otherwise it can cause corruption.
 
-## Running a single leg on ROS2
+## Running a leg
 
 For initial rViz check:
 
@@ -133,7 +135,7 @@ For the lifecycle that controls 1 leg:
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_1leg.webp" height="400">
 
-## Running full robot
+## Running the full robot
 
     cd CubicDoggo_07B/
     colcon build
