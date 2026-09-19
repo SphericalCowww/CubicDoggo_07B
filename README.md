@@ -4,6 +4,10 @@ Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/Spher
 
 ## Ingredients
 
+### 3D printing
+
+The 3D printer model Creality K1C is used with Orcaslicer slicer, but as long as they print PLA+, it's good. All the FreeCAD files can be found here: <a href="https://github.com/SphericalCowww/CubicDoggo_07B/tree/main/src/my_robot_description/mesh/CADv2_ST-3215-C018">link</a>.
+
 ### Hardware 
 
 | device | models | count | specification |
