@@ -31,6 +31,7 @@ Other than the M3 screw, one specific requirement is the M2 self-tapping screws,
   * Daisy chain no more than 3 servos to avoid excessive current
   * T-plugs are soldered to the bottom of the screw terminal of the driver boards. Adding a toggle switch to each of the T-plugs between the driver board and the battery is recommended because the boards don't have power switches. Search for 12V, 20A requirement for the toggle switches.
   * Power the servo controller with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity (shown in the right photo)
+  * Also, in the right photo is that the table is covered by a fire blanket in case of electrical shortages/high current during the testing stage
   * The ground between the 2 controllers should be shared when both are connecting the Rasp Pi with USB
   * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put Kapton tape to insulate the two boards
 
