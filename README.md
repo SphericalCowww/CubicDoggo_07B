@@ -2,6 +2,8 @@
 
 Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. The goal is to use a stronger servo and improve the structural support to handle the change.
 
+Requirement: installing ROS2 Jazzy on a Raspberry Pi according to [GitHub](https://github.com/SphericalCowww/ROS_init_practice).
+
 ## Ingredients
 
 ### 3D printing
@@ -12,7 +14,7 @@ The 3D printer model Creality K1C is used with the Orcaslicer, but as long as PL
 
 | device | models | count | specification |
 | - | - | - | - |
-| servo motor | <a href="https://eckstein-shop.de/feetech-st-3215-c018-servo-en">ST-3215-C018</a> | 12 | Max stall torque: 3.0 N*m (at 12.0V, 2.7A). Weight of 55g. Need also corresponding signal wires of various lengths |
+| servo motor | Feetech <a href="https://eckstein-shop.de/feetech-st-3215-c018-servo-en">ST-3215-C018</a> | 12 | Max stall torque: 3.0 N*m (at 12.0V, 2.7A). Weight of 55g. Need also corresponding signal wires of various lengths |
 | driver board | <a href="https://eckstein-shop.de/WaveShare-Serial-Bus-Servo-Driver-Board-for-ST-SC-Serial-Bus-Servos-EN">servo driver</a> | 2 | Ccontrol and power the servos in daisy chain |
 | onboard computer | Raspberry Pi 5 | 1 | For running just IK, a small RAM is sufficient; Pi 4 could be good enough as long as ROS2 Jazzy can be installed | 
 | DC-DC step-down converter | Hailege <a href="https://www.amazon.de/Hailege-Module-Step-Down-Supply-Converter/dp/B07XFMMY1F">24V/12V to 5V/5A</a> | 1 | USB Port port to RaspPi,  DC 5.5mm x 2.5mm Male to battery | 
@@ -39,9 +41,7 @@ Other than the M3 screw, one specific requirement is the M2 self-tapping screws,
 
 ## Running servos
 
-Install ROS2 Jazzy according to [GitHub](https://github.com/SphericalCowww/ROS_init_practice).
-
-### Testing with Python library
+### Testing with STServo Python library
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo1.png" height="200">
 
@@ -67,7 +67,7 @@ Download ``ST/SC serial bus servo control library (Python)`` from <a href="https
     # DEVICENAME = '/dev/ttyUSB0'    # change to the port for the controller
     python3 test.py                  # or spinTest_1servo.py in the code
 
-### Initializing and testing the servo  with ROS
+### Initializing servos in ROS with STServo library
 
 Download ``ST/SC serial bus servo control library (Linux)`` from <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">link</a>, expand it under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/`` and replace ``src/my_toolbox_scs_workbench/SCServo_Linux/SCServo_Linux_220329/SCServo_Linux/CMakeLists.txt``.
 
