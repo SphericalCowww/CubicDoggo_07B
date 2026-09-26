@@ -142,12 +142,25 @@ For the lifecycle that controls 1 leg:
 
 ## Running the full robot
 
+To check the rViz of the robot:
+
     cd CubicDoggo_07B/
     colcon build
     source install/setup.bash
     ros2 launch my_robot_description cubic_doggo.rviz.launch.xacro.py
 
+To run the full robot:
+
     ros2 launch my_robot_bringup cubic_doggo.with_lifecycle.launch.py
+    # on another terminal
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "rest"}"
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "stand"}"
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "sit"}"
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "bow"}"
+    ros2 topic pub -1 /leg_set_joint example_interfaces/msg/Float64MultiArray "{data: [0, 3.14, 3.14, 3.54]}"
+    ros2 topic pub -1 /leg_set_pose my_robot_interface/msg/CubicDoggoLegPoseTarget "{leg_index: 0, x: 0.09, y: 0.14, z: 0.14}" 
+    ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: true}"
+    ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: false}"
 
 ## References:
 
