@@ -2,17 +2,23 @@
 
 Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. The goal is to use a stronger servo and improve the structural support to handle the change.
 
+Requirement: installing ROS2 Jazzy on a Raspberry Pi according to [GitHub](https://github.com/SphericalCowww/ROS_init_practice).
+
 ## Ingredients
+
+### 3D printing
+
+The 3D printer model Creality K1C is used with the Orcaslicer, but as long as PLA+ can be printed. All the FreeCAD files can be found here: <a href="https://github.com/SphericalCowww/CubicDoggo_07B/tree/main/src/my_robot_description/mesh/CADv2_ST-3215-C018">link</a>.
 
 ### Hardware 
 
 | device | models | count | specification |
 | - | - | - | - |
-| servo motor | <a href="https://eckstein-shop.de/feetech-st-3215-c018-servo-en">ST-3215-C018</a> | 12 | Max stall torque: 3.0 N*m (at 12.0V, 2.7A). Weight of 55g. Need also corresponding signal wires of various lengths |
+| servo motor | Feetech <a href="https://eckstein-shop.de/feetech-st-3215-c018-servo-en">ST-3215-C018</a> | 12 | Max stall torque: 3.0 N*m (at 12.0V, 2.7A). Weight of 55g. Need also corresponding signal wires of various lengths |
 | driver board | <a href="https://eckstein-shop.de/WaveShare-Serial-Bus-Servo-Driver-Board-for-ST-SC-Serial-Bus-Servos-EN">servo driver</a> | 2 | Ccontrol and power the servos in daisy chain |
 | onboard computer | Raspberry Pi 5 | 1 | For running just IK, a small RAM is sufficient; Pi 4 could be good enough as long as ROS2 Jazzy can be installed | 
 | DC-DC step-down converter | Hailege <a href="https://www.amazon.de/Hailege-Module-Step-Down-Supply-Converter/dp/B07XFMMY1F">24V/12V to 5V/5A</a> | 1 | USB Port port to RaspPi,  DC 5.5mm x 2.5mm Male to battery | 
-| battery | ZYGY <a href="https://www.amazon.de/dp/B0BB6RMM5Q">11.1V 2000mAh</a> | 2 | They already include protection. Need Charger. Need adapters for: T-plug => XT60 Male => DC 5.5mm x 2.5mm Male | 
+| battery | ZYGY <a href="https://www.amazon.de/dp/B0BB6RMM5Q">11.1V 2000mAh</a> | 2 | They already include protection. Need Charger. Need adapters for: T-plug => XT60 Male => DC 5.5mm x 2.5mm Male. Also recommend [toggle switches](https://www.amazon.de/-/en/gp/product/B0CX8TRQ35) to be soldered on the T-plugs  | 
 | capacitor | 1000uF | 2 | rating 25V or higher | 
 | bearings | M3 bearing+<a href="https://www.amazon.de/dp/B01M2ZCLKX">spacer</a>, threaded rod, rod-end bearing | 8, 4, 4, 4 | rod length of 60mm to match the leg length; other dimensions can be accomodated by modifying the CAD |
 | bolts and nuts | | | M3 screws are used throughout, except where required to accommodate the servos and electronic boards; use locknuts |
@@ -24,18 +30,20 @@ Other than the M3 screw, one specific requirement is the M2 self-tapping screws,
 
 ### Power system
 
-  * Daisy chain no more than 3 servos to avoid delay
-  * Power the servo controller with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity
+  * Daisy chain no more than 3 servos to avoid excessive current
+  * T-plugs are soldered to the bottom of the screw terminal of the driver boards. Adding a toggle switch to each of the T-plugs between the driver board and the battery is recommended because the boards don't have power switches. Search for 12V, 20A requirement for the toggle switches.
+  * Power the servo controller with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity (shown in the right photo)
+  * Also, in the right photo is that the table is covered by a fire blanket in case of electrical shortages/high current during the testing stage
   * The ground between the 2 controllers should be shared when both are connecting the Rasp Pi with USB
-  * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put kapton tape to insulate the two boards
+  * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put Kapton tape to insulate the two boards
 
-<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/powersystem.png" height="400"> 
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_powersystem1.png" height="400"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_powersystem2.png" height="400"> 
 
-## Running a Single Servo on ROS2
+## Running servos
+
+### Testing with STServo Python library
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo1.png" height="200">
-
-### Testing with Python library
 
 Plug in the device:
 
@@ -59,7 +67,7 @@ Download ``ST/SC serial bus servo control library (Python)`` from <a href="https
     # DEVICENAME = '/dev/ttyUSB0'    # change to the port for the controller
     python3 test.py                  # or spinTest_1servo.py in the code
 
-### Initializing and testing the servo  with ROS
+### Initializing servos in ROS with STServo library
 
 Download ``ST/SC serial bus servo control library (Linux)`` from <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">link</a>, expand it under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/`` and replace ``src/my_toolbox_scs_workbench/SCServo_Linux/SCServo_Linux_220329/SCServo_Linux/CMakeLists.txt``.
 
@@ -97,7 +105,7 @@ To test 2 servos with 2 controllers, or 3 servos daisy-chained, redo the connect
 
 **NOTE:** ``sts_wb.writeByte``requires unlocking the EEPROM; do NOT do this firmware change too frequently, otherwise it can cause corruption.
 
-## Running a single leg on ROS2
+## Running a leg
 
 For initial rViz check:
 
@@ -130,14 +138,29 @@ For the lifecycle that controls 1 leg:
     ros2 lifecycle set /cubic_leg1_lifecycle deactivate
     ros2 lifecycle set /cubic_leg1_lifecycle shutdown
 
-## Running full robot
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_1leg.webp" height="400">
+
+## Running the full robot
+
+To check the rViz of the robot:
 
     cd CubicDoggo_07B/
     colcon build
     source install/setup.bash
     ros2 launch my_robot_description cubic_doggo.rviz.launch.xacro.py
 
+To run the full robot:
+
     ros2 launch my_robot_bringup cubic_doggo.with_lifecycle.launch.py
+    # on another terminal
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "rest"}"
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "stand"}"
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "sit"}"
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "bow"}"
+    ros2 topic pub -1 /leg_set_joint example_interfaces/msg/Float64MultiArray "{data: [0, 3.14, 3.14, 3.54]}"
+    ros2 topic pub -1 /leg_set_pose my_robot_interface/msg/CubicDoggoLegPoseTarget "{leg_index: 0, x: 0.09, y: 0.14, z: 0.14}" 
+    ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: true}"
+    ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: false}"
 
 ## References:
 
