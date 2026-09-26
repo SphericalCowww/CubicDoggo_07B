@@ -9,7 +9,7 @@ int main() {
     const char* port_name = "/dev/ttyACM0";
     int         baud_rate = 1000000;
 
-    int targetID   = 11;            // set to this ID, -1 to not set
+    int targetID   = 33;            // set to this ID, -1 to not set
     int pos_offset = 0;            // offset to the default position, remember to recording it
     int pos_offset_noEEPROM = 0;
     ///////////////////////////////////////////////////////////////// connect only 1 controller and 1 servo
