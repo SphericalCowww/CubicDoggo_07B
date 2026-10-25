@@ -158,7 +158,7 @@ The full robot uses two controllers, and ``ls -l /dev/ttyACM*`` is randomly assi
     ## <param name="port_name_back"> /dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14029539-if00</param>
     colcon build
 
-To run the full robot:
+To run the full robot, power on the controllers and do:
 
     ros2 launch my_robot_bringup cubic_doggo.with_lifecycle.launch.py
     # on another terminal
