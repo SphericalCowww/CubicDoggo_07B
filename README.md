@@ -149,6 +149,15 @@ To check the rViz of the robot:
     source install/setup.bash
     ros2 launch my_robot_description cubic_doggo.rviz.launch.xacro.py
 
+The full robot uses two controllers, and ``ls -l /dev/ttyACM*`` is randomly assigned, so it is not reliable. Instead, check,
+
+    ls -l /dev/serial/by-id/
+    vim src/my_robot_description/urdf/cubic_doggo.ros2_control.xacro
+    # Update the configuration to match the controller's unique IDs, for example,
+    ## <param name="port_name_front">/dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14033936-if00</param>
+    ## <param name="port_name_back"> /dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14029539-if00</param>
+    colcon build
+
 To run the full robot:
 
     ros2 launch my_robot_bringup cubic_doggo.with_lifecycle.launch.py
