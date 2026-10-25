@@ -171,6 +171,52 @@ To run the full robot, power on the driver boards and do:
     ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: true}"
     ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: false}"
 
+### Testing the joystick controller:
+
+    ls /dev/input/js*
+    # output: /dev/input/js0
+    # otherwise do: sudo jstest /dev/input/js0
+    ros2 run joy joy_enumerate_devices
+    # if no device found
+    sudo usermod -aG input $USER
+    sudo reboot
+
+    cd CubicDoggo_07B
+    colcon build
+    source install/setup.bash
+    ros2 run joy joy_node
+    # on another terminal
+    ros2 run my_robot_controller cubic_doggo_joy_control
+    # on yet another terminal
+    ros2 node info /cubic_doggo_joy_control    
+    ros2 topic info /joy --verbose
+    ros2 topic echo /joy
+
+### Checking RaspPi power
+
+    for d in /sys/class/hwmon/hwmon*; do echo -n "$d: "; cat "$d/name"; done   # find the correct path for power alarm
+    # update CubicDoggo_07B/src/my_robot_bringup/launch/cubic_doggo.with_lifecycle.launch.py
+    echo timer | sudo tee /sys/class/leds/ACT/trigger                          # trigger LED first
+    sudo chmod -R 777 /sys/class/leds/ACT/                                     # enable LED to indicate battery condition
+    sudo chmod -R 777 /sys/class/hwmon/hwmon*/                                 # enable reading of power alarm/voltage
+    # test the node 
+    echo 0 > /tmp/fake_alarm                                                   # create a fake alarm by
+    ros2 run my_robot_peripheral rasp_pi_peripheral_node --ros-args -p alarm_path:=/tmp/fake_alarm
+    echo 1 > /tmp/fake_alarm                                                   # create a fake alarm by
+
+### Launching at the start of RaspPi
+
+    chmod +x CubicDoggo_07B/start_robot.sh
+    sudo cp CubicDoggo_07B/robot_startup.service /etc/systemd/system/robot_startup.service
+    sudo chmod 644 /etc/systemd/system/robot_startup.service
+    sudo systemctl enable robot_startup.service                                # now will start at reboot
+    sudo systemctl daemon-reload                                               # reload whenever there is a change
+    # sudo systemctl restart robot_startup.service                             # restart, even if is rrunning
+    # sudo systemctl stop    robot_startup.service                             # stop right now, kill all relevant nodes
+    # sudo systemctl disable robot_startup.service                             # disable at reboot
+    # journalctl -u robot_startup.service -n 100 > start_robot_output.txt      # to check the output
+    # journalctl -u robot_startup.service -f
+
 ## References:
 
 - Waveshare, <a href="https://www.waveshare.com/wiki/ST3215_Servo">ST3215 Servo</a>, <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">Bus Servo Adapter</a>
