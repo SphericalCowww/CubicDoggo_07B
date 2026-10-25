@@ -26,15 +26,15 @@ The 3D printer model Creality K1C is used with the Orcaslicer, but as long as PL
 
 Other than the M3 screw, one specific requirement is the M2 self-tapping screws, specific to 1cm length given 6mm padding, for the servos. Note that the length matters a lot, screw in 1 mm too much can already damage the servo!
 
-**Soldering requirement:** solder the 1000uF capacitor to the T-plug to screw terminal adapter (for the servo controllers). Watch out for the polarity.
+**Soldering requirement:** solder the 1000uF capacitor to the T-plug to screw terminal adapter (for the servo driver boards). Watch out for the polarity.
 
 ### Power system
 
   * Daisy chain no more than 3 servos to avoid excessive current
   * T-plugs are soldered to the bottom of the screw terminal of the driver boards. Adding a toggle switch to each of the T-plugs between the driver board and the battery is recommended because the boards don't have power switches. Search for 12V, 20A requirement for the toggle switches.
-  * Power the servo controller with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity (shown in the right photo)
-  * Also, in the right photo is that the table is covered by a fire blanket in case of electrical shortages/high current during the testing stage
-  * The ground between the 2 controllers should be shared when both are connecting the Rasp Pi with USB
+  * Power the servo driver board with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity (shown in the right photo)
+  * Also, in the right photo, the table is covered by a fire blanket in case of electrical shortages/high current during the testing stage
+  * The ground between the 2 driver boards should be shared when both are connected to the Rasp Pi via USB
   * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put Kapton tape to insulate the two boards
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_powersystem1.png" height="400"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_powersystem2.png" height="400"> 
@@ -149,16 +149,16 @@ To check the rViz of the robot:
     source install/setup.bash
     ros2 launch my_robot_description cubic_doggo.rviz.launch.xacro.py
 
-The full robot uses two controllers, and ``ls -l /dev/ttyACM*`` is randomly assigned, so it is not reliable. Instead, check,
+The full robot uses two driver boards, and ``ls -l /dev/ttyACM*`` is randomly assigned, so it is not reliable. Instead, check,
 
     ls -l /dev/serial/by-id/
     vim src/my_robot_description/urdf/cubic_doggo.ros2_control.xacro
-    # Update the configuration to match the controller's unique IDs, for example,
+    # Update the configuration to match the driver boards' unique IDs, for example,
     ## <param name="port_name_front">/dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14033936-if00</param>
     ## <param name="port_name_back"> /dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14029539-if00</param>
     colcon build
 
-To run the full robot, power on the controllers and do:
+To run the full robot, power on the driver boards and do:
 
     ros2 launch my_robot_bringup cubic_doggo.with_lifecycle.launch.py
     # on another terminal
