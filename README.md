@@ -4,7 +4,7 @@
 
 Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. With the ST-3215-C018 servos, Wouf weighs 2.2 kg while having a payload of more than 1 kg, roughly 50% of the body weight!
 
-Requirement: installing ROS2 Jazzy on a Raspberry Pi according to [GitHub](https://github.com/SphericalCowww/ROS_init_practice).
+Demos: walking while carrying load ([Reddit](https://www.reddit.com/r/robotics/comments/1xh34ti/cubic_doggo_update_wouf_walking_with_1kg_22lb/))
 
 ## Ingredients
 
@@ -70,6 +70,8 @@ Download ``ST/SC serial bus servo control library (Python)`` from <a href="https
     python3 test.py                  # or spinTest_1servo.py in the code
 
 ### Initializing servos in ROS with STServo library
+
+Requirement: install ROS2 Jazzy on a Raspberry Pi according to [GitHub](https://github.com/SphericalCowww/ROS_init_practice).
 
 Download ``ST/SC serial bus servo control library (Linux)`` from <a href="https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)">link</a>, expand it under ``CubicDoggo_07B/src/my_toolbox_scs_workbench/`` and replace ``src/my_toolbox_scs_workbench/SCServo_Linux/SCServo_Linux_220329/SCServo_Linux/CMakeLists.txt``.
 
@@ -229,8 +231,10 @@ To run the full robot, power on the driver boards and do:
 
 ## Next directions
 
+Note that the ST-3215 read latency problem from SMS_STS library is not solved in this repo, and will be solved in later versions. Demo video before disable read ([Reddit](https://www.reddit.com/r/robotics/comments/1wrha5i/cubic_doggo_update_wouf_moves_like_a_newborn_lamb/)) and after disable read ([Reddit](https://www.reddit.com/r/robotics/comments/1xey15u/cubic_doggo_update_woufs_first_steps/)).
+
+- <a href="https://github.com/SphericalCowww/CubicDoggo_07R">Cubic Doggo 07R Wouf High IMUbility</a>: IMU adaptation + optimizations
 - <a href="https://github.com/SphericalCowww/CubicDoggo_07B-3">Cubic Doggo 07B-3 Wouf Custom</a>: LIDAR, microphone, and camera peripherals
-- <a href="https://github.com/SphericalCowww/CubicDoggo_07R">Cubic Doggo 07R Wouf IMUbility</a>: IMU adaptation
 - <a href="https://github.com/SphericalCowww/CubicDoggo_09B">Cubic Doggo 09B Dogm</a>: wheel adaptation
 
 ## References:
