@@ -1,6 +1,8 @@
 # CubicDoggo 07B: Homemade 12-DOF 4-Legged Robot Recipe
 
-Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. The goal is to use a stronger servo and improve the structural support to handle the change.
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf0.png" height="400">
+
+Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. With the ST-3215-C018 servos, Wouf weighs 2.2 kg while having a payload of more than 1 kg, roughly 50% of the body weight!
 
 Requirement: installing ROS2 Jazzy on a Raspberry Pi according to [GitHub](https://github.com/SphericalCowww/ROS_init_practice).
 
@@ -24,9 +26,9 @@ The 3D printer model Creality K1C is used with the Orcaslicer, but as long as PL
 | bolts and nuts | | | M3 screws are used throughout, except where required to accommodate the servos and electronic boards; use locknuts |
 | locking washers | [M3](https://www.amazon.de/dp/B09SCQV81D) | | use in case when locknuts are not available; use it along side regular washer: 3D-printed surface => regular washer => locking washer (convex side away from the surface) => bolt |
 
-Other than the M3 screw, one specific requirement is the M2 self-tapping screws, specific to 1cm length given 6mm padding, for the servos. Note that the length matters a lot, screw in 1 mm too much can already damage the servo!
+Other than the M3 screws (12mm, 16mm, 30mm), one specific requirement is the M2 self-tapping screws, specific to 10 mm length given 6mm padding, for the servos. Note that the length matters a lot, screw in 1 mm too much can already damage the servo!
 
-**Soldering requirement:** solder the 1000uF capacitor to the T-plug to screw terminal adapter (for the servo driver boards). Watch out for the polarity.
+**Soldering requirement:** solder the 1000uF capacitor to the T-plug-to-screw-terminal adapter (for the servo driver boards). Watch out for the polarity.
 
 ### Power system
 
@@ -107,6 +109,10 @@ To test 2 servos with 2 controllers, or 3 servos daisy-chained, redo the connect
 
 ## Running a leg
 
+Once again, for the M2 self-tapping screws, use screws with 10 mm length, given 6mm padding from the blue holder part; the length matters a lot, screw in 1 mm too much can already damage the servo! Also, don't forget the center M3 screw when connecting the blue holder part to the servo shaft; this significantly increases the leg stability.
+
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg0.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg1.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg2.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg3.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg4.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo_connection1.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo_connection2.png" height="200"> 
+
 For initial rViz check:
 
     cd CubicDoggo_07B/
@@ -141,6 +147,10 @@ For the lifecycle that controls 1 leg:
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_1leg.webp" height="400">
 
 ## Running the full robot
+
+Yes, the LiDAR is connected at the moment; it serves more as a counterweight at the moment.
+
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf3.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf1.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf2.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf4.png" height="300"> 
 
 To check the rViz of the robot:
 
@@ -215,7 +225,13 @@ To run the full robot, power on the driver boards and do:
     # sudo systemctl stop    robot_startup.service                             # stop right now, kill all relevant nodes
     # sudo systemctl disable robot_startup.service                             # disable at reboot
     # journalctl -u robot_startup.service -n 100 > start_robot_output.txt      # to check the output
-    # journalctl -u robot_startup.service -f
+    # journalctl -u robot_startup.service -f                                   # to follow the log live
+
+## Next directions
+
+- <a href="https://github.com/SphericalCowww/CubicDoggo_07B-3">Cubic Doggo 07B-3 Wouf Custom</a>: LIDAR, microphone, and camera peripherals
+- <a href="https://github.com/SphericalCowww/CubicDoggo_07R">Cubic Doggo 07R Wouf IMUbility</a>: IMU adaptation
+- <a href="https://github.com/SphericalCowww/CubicDoggo_09B">Cubic Doggo 09B Dogm</a>: wheel adaptation
 
 ## References:
 
