@@ -150,8 +150,6 @@ For the lifecycle that controls 1 leg:
 
 ## Running the full robot
 
-Yes, the LiDAR is connected at the moment; it serves more as a counterweight at the moment.
-
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf3.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf1.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf2.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf4.png" height="300"> 
 
 To check the rViz of the robot:
@@ -232,6 +230,8 @@ To run the full robot, power on the driver boards and do:
 ## Next directions
 
 Note that the ST-3215 read latency problem from SMS_STS library is not solved in this repo, and will be solved in later versions. Demo video before disable read ([Reddit](https://www.reddit.com/r/robotics/comments/1wrha5i/cubic_doggo_update_wouf_moves_like_a_newborn_lamb/)) and after disable read ([Reddit](https://www.reddit.com/r/robotics/comments/1xey15u/cubic_doggo_update_woufs_first_steps/)).
+
+And yes, the LiDAR serves more as a counterweight at the moment. Planning to turn it on for the next steps.
 
 - <a href="https://github.com/SphericalCowww/CubicDoggo_07R">Cubic Doggo 07R Wouf High IMUbility</a>: IMU adaptation + optimizations
 - <a href="https://github.com/SphericalCowww/CubicDoggo_07B-3">Cubic Doggo 07B-3 Wouf Custom</a>: LIDAR, microphone, and camera peripherals
