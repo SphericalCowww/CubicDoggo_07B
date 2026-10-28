@@ -4,8 +4,8 @@
         <hardware>
             <!--plugin>mock_components/GenericSystem</plugin-->
             <plugin>cubic_doggo_namespace/HardwareInterfaceST3215_cubic_doggo</plugin>
-            <param name="port_name_front">/dev/ttyACM0</param>
-            <param name="port_name_back"> /dev/ttyACM1</param>
+            <param name="port_name_front">/dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14033936-if00</param>
+            <param name="port_name_back"> /dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14029539-if00</param>
             <param name="baud_rate">1000000</param>
             <param name="servo1_channel_FL">11</param>
             <param name="servo2_channel_FL">12</param>

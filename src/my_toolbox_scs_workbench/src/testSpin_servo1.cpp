@@ -7,7 +7,7 @@ int main()
 {
     const char* port_name = "/dev/ttyACM0";
     int         baud_rate = 1000000;
-    int         servoID   = 1; 
+    int         servoID   = 11; 
     //////////////////////////////////////////////////////////////////////////
     u8  ID [1] = {servoID};
     s16 pos[1];
@@ -39,7 +39,7 @@ int main()
                  <<"  moving_status: "<<moving_status<<std::endl;
         usleep(3000*1000);
   
-		pos[0] = MAXIMUM_POSITION_VALUE*1.0/4.0, vel[0] = 2000, acc[0] = 50;
+		pos[0] = MAXIMUM_POSITION_VALUE*1.0/4.0, vel[0] = 5000, acc[0] = 0;
 		sts_wb.SyncWritePosEx(ID, 1, pos, vel, acc);
 	    present_pos   = sts_wb.ReadPos(ID[0]);
         present_vel   = sts_wb.ReadSpeed(ID[0]);

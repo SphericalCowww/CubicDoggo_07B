@@ -1,6 +1,6 @@
 #!/bin/bash
 source /opt/ros/jazzy/setup.bash
-source /home/kali/Documents/CubicDoggo/install/setup.bash
+source /home/cubicwouf/Documents/CubicDoggo_07B/install/setup.bash
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 export QT_QPA_PLATFORM=xcb
 

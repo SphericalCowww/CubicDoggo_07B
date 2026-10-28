@@ -139,16 +139,19 @@ namespace cubic_doggo_namespace {
         const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
         RCLCPP_DEBUG(get_logger(), "hardware_interface:read()");
+        (void) time;  
         (void) period;
-        if (write_first_call_ == true) {
-            start_time_ = time;
-            write_first_call_ = false;
-        }
-        rclcpp::Duration lifetime = time - start_time_;
     
-        std::thread thread0(&HardwareInterfaceST3215_cubic_doggo::read_controller_range, this, 0);
-        std::thread thread1(&HardwareInterfaceST3215_cubic_doggo::read_controller_range, this, 1);
-        thread0.join(); thread1.join();
+
+
+        // WARNING: TURN OFF CURRENT READ CODE DUE TO LATENCY
+        //std::thread thread0(&HardwareInterfaceST3215_cubic_doggo::read_controller_range, this, 0);
+        //std::thread thread1(&HardwareInterfaceST3215_cubic_doggo::read_controller_range, this, 1);
+        //thread0.join(); thread1.join();
+        
+
+
+
         for (std::size_t servo_idx = 0; servo_idx < servo_N_; servo_idx++) {
             rad_pos_[servo_idx] = (double) (sts_range_-sts_pos_[servo_idx])*(2.0*M_PI)/sts_range_;
             rad_vel_[servo_idx] = (double) -sts_vel_[servo_idx]            *(2.0*M_PI)/sts_range_;
@@ -164,6 +167,7 @@ namespace cubic_doggo_namespace {
         const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
         RCLCPP_DEBUG(get_logger(), "hardware_interface:write()");
+        (void) time;  
         (void) period; 
         
         // see: src/my_robot_description/urdf/cubic_doggo.ros2_control.xacro
@@ -188,27 +192,26 @@ namespace cubic_doggo_namespace {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void HardwareInterfaceST3215_cubic_doggo::initialize_servo_(uint8_t servo_idx) {
         rad_pos_[servo_idx] = rad_pos_init_[servo_idx];
-        sts_pos_[servo_idx] = static_cast<s16>(std::round((2.0*M_PI-rad_pos_[servo_idx])*sts_range_/(2.0*M_PI)));
         rad_vel_[servo_idx] = 0.0;
-        sts_vel_[servo_idx] = 0;
         rad_eff_[servo_idx] = 0.0;
+        sts_pos_[servo_idx] = static_cast<s16>(std::round((2.0*M_PI-rad_pos_[servo_idx])*sts_range_/(2.0*M_PI)));
+        sts_vel_[servo_idx] = 0;
         sts_eff_[servo_idx] = 0;
     }
     void HardwareInterfaceST3215_cubic_doggo::read_controller_range(std::size_t sts_idx) {
-    std::size_t servo_start_idx = (sts_idx == 0) ? 0 : servo_N_/2;
-    std::size_t servo_end_idx   = servo_start_idx + servo_N_/2;
-    for (std::size_t servo_idx = servo_start_idx; servo_idx < servo_end_idx; servo_idx++) {
-        uint8_t raw_data[6];
-        if (sts_wb_[sts_idx].Read(servo_channels_[servo_idx], 56, raw_data, 6) == 6) {
-            sts_pos_[servo_idx] = *(s16*) &raw_data[0];
-            sts_vel_[servo_idx] = *(s16*) &raw_data[2];
-            sts_eff_[servo_idx] = *(s16*) &raw_data[4];
-        } else {
-            sts_eff_[servo_idx] = -32768; 
+        std::size_t servo_start_idx = (sts_idx == 0) ? 0 : servo_N_/2;
+        std::size_t servo_end_idx   = servo_start_idx + servo_N_/2;
+        for (std::size_t servo_idx = servo_start_idx; servo_idx < servo_end_idx; servo_idx++) {
+            uint8_t raw_data[6];
+            if (sts_wb_[sts_idx].Read(servo_channels_[servo_idx], 56, raw_data, 6) == 6) {
+                sts_pos_[servo_idx] = *(s16*) &raw_data[0];
+                sts_vel_[servo_idx] = *(s16*) &raw_data[2];
+                sts_eff_[servo_idx] = *(s16*) &raw_data[4];
+            } else {
+                sts_eff_[servo_idx] = -32768; 
+            }
         }
     }
-}
-
 }
 #include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(cubic_doggo_namespace::HardwareInterfaceST3215_cubic_doggo,hardware_interface::SystemInterface)
