@@ -39,8 +39,8 @@ using custom_pose_array = my_robot_interface::msg::CubicDoggoLegPoseTarget;
 using custom_feet_array = my_robot_interface::msg::CubicDoggoLegFeetTarget;
 using ros_bool          = example_interfaces::msg::Bool;
 
-const double DEFAULT_VEL_SCALE = 0.2;
-const double DEFAULT_ACC_SCALE = 0.05;
+const double DEFAULT_VEL_SCALE = 0.5;
+const double DEFAULT_ACC_SCALE = 0.2;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class CubicDoggoLifecycleManager : public rclcpp_lifecycle::LifecycleNode {
 public:

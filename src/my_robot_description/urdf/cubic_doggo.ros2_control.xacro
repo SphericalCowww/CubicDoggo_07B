@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <ros2_control name="cubic_doggo_controller" type="system">
+    <ros2_control name="cubic_doggo_controller" type="system" rw_rate="100" is_async="true">
+        <properties>
+            <property name="thread_priority">30</property>
+            <property name="affinity">[2]</property>
+        </properties>
         <hardware>
             <!--plugin>mock_components/GenericSystem</plugin-->
             <plugin>cubic_doggo_namespace/HardwareInterfaceST3215_cubic_doggo</plugin>
