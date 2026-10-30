@@ -1,0 +1,4 @@
+files:
+  urdf: src/my_robot_description/urdf/cubic_doggo.urdf.xacro
+  parts_3d: src/my_robot_description/mesh/CADv2_ST-3215-C018
+  cad: src/my_robot_description/mesh/CADv2_ST-3215-C018
