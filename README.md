@@ -236,9 +236,9 @@ Note that the ST-3215 read latency problem from SMS_STS library is not solved in
 
 And yes, the LiDAR serves more as a counterweight at the moment. Planning to turn it on for the next steps.
 
-- <a href="https://github.com/SphericalCowww/CubicDoggo_07R">Cubic Doggo 07R Wouf High IMUbility</a>: IMU adaptation + optimizations
 - <a href="https://github.com/SphericalCowww/CubicDoggo_07B-3">Cubic Doggo 07B-3 Wouf Custom</a>: LIDAR, microphone, and camera peripherals
 - <a href="https://github.com/SphericalCowww/CubicDoggo_09B">Cubic Doggo 09B Dogm</a>: wheel adaptation
+- <a href="https://github.com/SphericalCowww/CubicDoggo_14A">Cubic Doggo 14A Googboi</a>: with the SO-101 arm, [Tag of Flag](https://github.com/SphericalCowww/tag_of_flag) optimization
 
 ## References:
 
