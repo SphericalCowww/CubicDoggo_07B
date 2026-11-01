@@ -5,9 +5,9 @@ Wants=network-online.target time-sync.target
 
 [Service]
 Type=simple
-User=kali
-ExecStartPre=/bin/bash -c "until [ -e /dev/ttyUSB0 ]; do sleep 1; done"
-ExecStart=/home/kali/Documents/CubicDoggo/start_robot.sh
+User=cubicwouf
+ExecStartPre=/bin/bash -c "until [ -e /dev/ttyACM0 ]; do sleep 1; done"
+ExecStart=/home/cubicwouf/Documents/CubicDoggo_07B/start_robot.sh
 KillMode=control-group
 # Restart=no
 Restart=on-failure
