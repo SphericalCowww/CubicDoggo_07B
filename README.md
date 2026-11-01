@@ -69,7 +69,7 @@ Download ``ST/SC serial bus servo control library (Python)`` from <a href="https
     cp -r STServo_Python/stservo-env/scservo_sdk .
     cp STServo_Python/stservo-env/sms_sts/read_write.py test.py    
     vim test.py
-    # DEVICENAME = '/dev/ttyUSB0'    # change to the port for the controller
+    # DEVICENAME = '/dev/ttyACM0'    # change to the port for the controller
     python3 test.py                  # or spinTest_1servo.py in the code
 
 ### Initializing servos in ROS with STServo library
@@ -219,12 +219,15 @@ To run the full robot, power on the driver boards and do:
 
 ### Launching at the start of RaspPi
 
-    chmod +x CubicDoggo_07B/start_robot.sh
-    sudo cp CubicDoggo_07B/robot_startup.service /etc/systemd/system/robot_startup.service
+    cd CubicDoggo_07B/
+    chmod +x start_robot.sh
+    vim robot_startup.service
+    # update the user name, paths, and mount name
+    sudo cp robot_startup.service /etc/systemd/system/robot_startup.service
     sudo chmod 644 /etc/systemd/system/robot_startup.service
     sudo systemctl enable robot_startup.service                                # now will start at reboot
     sudo systemctl daemon-reload                                               # reload whenever there is a change
-    # sudo systemctl restart robot_startup.service                             # restart, even if is rrunning
+    # sudo systemctl restart robot_startup.service                             # restart, even if it is running
     # sudo systemctl stop    robot_startup.service                             # stop right now, kill all relevant nodes
     # sudo systemctl disable robot_startup.service                             # disable at reboot
     # journalctl -u robot_startup.service -n 100 > start_robot_output.txt      # to check the output
