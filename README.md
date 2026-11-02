@@ -2,11 +2,11 @@
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf0.png" height="400">
 
-Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. With the ST-3215-C018 servos, Wouf weighs 2.2 kg while having a payload of more than 1 kg for walking, roughly 50% of the body weight! 
+Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. With the ST-3215-C018 servos, Wouf weighs 2.2 kg while having a payload of more than 1 kg for walking, roughly 50% of the body weight! Moreover, while carrying 600 g payload for 110 min! Given that all components are either 3D-printed or commercially available, in the 200-400 EUR range (2026), I would recommend it as a robust first baseline quadruped build, capable of supporting a diverse range of future extensions.
 
-The CAD files in FreeCAD (so completely modifiable) can be found in <a href="https://github.com/SphericalCowww/CubicDoggo_07B/tree/main/src/my_robot_description/mesh/CADv2_ST-3215-C018">GitHub directory</a>/<a href="https://www.printables.com/model/1895571-cubic-doggo-07b-wouf">Printables</a>.
+The CAD files in FreeCAD (so completely free to modify) can be found in <a href="https://github.com/SphericalCowww/CubicDoggo_07B/tree/main/src/my_robot_description/mesh/CADv2_ST-3215-C018">GitHub directory</a>/<a href="https://www.printables.com/model/1895571-cubic-doggo-07b-wouf">Printables</a>.
 
-Demos: walking while carrying load ([Reddit](https://www.reddit.com/r/robotics/comments/1xh34ti/cubic_doggo_update_wouf_walking_with_1kg_22lb/)) 
+Demos: walking while carrying load ([Reddit](https://www.reddit.com/r/robotics/comments/1xh34ti/cubic_doggo_update_wouf_walking_with_1kg_22lb/)), load carrying endorance test ([Reddit](https://www.reddit.com/r/robotics/comments/1xkmeok/cubic_doggo_test_woufs_spooky_endorance_test/), Halloween edition), release post ([Reddit](https://www.reddit.com/r/robotics/comments/1xj0ul9/cubic_doggo_07b_wouf_a_lowbudget_opensource/)), promo video ([Reddit]())
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf0.webp" height="400">
 
@@ -239,7 +239,7 @@ Note that the ST-3215 read latency problem from SMS_STS library is not solved in
 
 And yes, the LiDAR serves more as a counterweight at the moment. Planning to turn it on for the next steps.
 
-- <a href="https://github.com/SphericalCowww/CubicDoggo_07R-35">Cubic Doggo 07R-35 Wouf IMUbility</a>: gait/read optimization and IMU
+- <a href="https://github.com/SphericalCowww/CubicDoggo_07R-35">Cubic Doggo 07R-35 Wouf IMUbility</a>: gait/feedback optimization and IMU
 - <a href="https://github.com/SphericalCowww/CubicDoggo_07B-3">Cubic Doggo 07B-3 Wouf Custom</a>: LIDAR, microphone, and camera peripherals
 - <a href="https://github.com/SphericalCowww/CubicDoggo_09B">Cubic Doggo 09B Dogm</a>: wheels
 - <a href="https://github.com/SphericalCowww/CubicDoggo_14A">Cubic Doggo 14A Googboi</a>: SO-101 arm, [Tag of Flag](https://github.com/SphericalCowww/tag_of_flag) optimization
