@@ -2,7 +2,7 @@
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf0.png" height="400">
 
-Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. With the ST-3215-C018 servos, Wouf weighs 2.2 kg while having a payload of more than 1 kg for walking, roughly 50% of the body weight! Moreover, while carrying 600 g payload for 110 min! Given that all components are either 3D-printed or commercially available, in the 200-400 EUR range (2026), I would recommend it as a robust first baseline quadruped build, capable of supporting a diverse range of future extensions.
+Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. With the ST-3215-C018 servos, Wouf weighs 2.2 kg while having a payload of more than 1 kg for walking, roughly 50% of the body weight! Moreover, while carrying 600 g payload for 110 min! Given that all components are either 3D-printed or commercially available, in the 200-400 EUR range especially if you own a Raspberry Pi (2026), I would recommend it as a robust first baseline quadruped build that is capable of supporting a diverse range of future extensions.
 
 The CAD files in FreeCAD (so completely free to modify) can be found in <a href="https://github.com/SphericalCowww/CubicDoggo_07B/tree/main/src/my_robot_description/mesh/CADv2_ST-3215-C018">GitHub directory</a>/<a href="https://www.printables.com/model/1895571-cubic-doggo-07b-wouf">Printables</a>.
 
