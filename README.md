@@ -2,7 +2,7 @@
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf0.png" height="400">
 
-Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. With the ST-3215-C018 servos, Wouf weighs 2.2 kg while having a payload of more than 1 kg for walking, roughly 50% of the body weight! Moreover, while carrying 600 g payload for 110 min! Given that all components are either 3D-printed or commercially available, in the 200-400 EUR range especially if you own a Raspberry Pi (2026), I would recommend it as a robust first baseline quadruped build that is capable of supporting a diverse range of future extensions.
+Cubic Doggo 07B Wouf is an upgrade of the base <a href="https://github.com/SphericalCowww/CubicDoggo">Cubic Doggo</a>. With the ST-3215-C018 servos, Wouf weighs 2.2 kg while having a payload of more than 1 kg for walking, roughly 50% of the body weight! Moreover, while carrying 600 g payload for 110 min! Given that all components are either 3D-printed or commercially available, in the 200-400 EUR range, especially if you own a Raspberry Pi (2026), I would recommend it as a robust first baseline quadruped build that is capable of supporting a diverse range of future extensions.
 
 The CAD files in FreeCAD (so completely free to modify) can be found in <a href="https://github.com/SphericalCowww/CubicDoggo_07B/tree/main/src/my_robot_description/mesh/CADv2_ST-3215-C018">GitHub directory</a>/<a href="https://www.printables.com/model/1895571-cubic-doggo-07b-wouf">Printables</a>.
 
@@ -118,7 +118,7 @@ Once again, for the M2 self-tapping screws, use screws with 10 mm length, given 
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg0.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg1.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg2.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg3.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_leg4.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo_connection1.png" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo_connection2.png" height="200"> 
 
-For initial rViz check:
+For an initial rViz check:
 
     cd CubicDoggo_07B/
     colcon build
@@ -150,39 +150,6 @@ For the lifecycle that controls 1 leg:
     ros2 lifecycle set /cubic_leg1_lifecycle shutdown
 
 <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_1leg.webp" height="400">
-
-## Running the full robot
-
-<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf3.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf1.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf2.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf4.png" height="300"> 
-
-To check the rViz of the robot:
-
-    cd CubicDoggo_07B/
-    colcon build
-    source install/setup.bash
-    ros2 launch my_robot_description cubic_doggo.rviz.launch.xacro.py
-
-The full robot uses two driver boards, and ``ls -l /dev/ttyACM*`` is randomly assigned, so it is not reliable. Instead, check,
-
-    ls -l /dev/serial/by-id/
-    vim src/my_robot_description/urdf/cubic_doggo.ros2_control.xacro
-    # Update the configuration to match the driver boards' unique IDs, for example,
-    ## <param name="port_name_front">/dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14033936-if00</param>
-    ## <param name="port_name_back"> /dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14029539-if00</param>
-    colcon build
-
-To run the full robot, power on the driver boards and do:
-
-    ros2 launch my_robot_bringup cubic_doggo.with_lifecycle.launch.py
-    # on another terminal
-    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "rest"}"
-    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "stand"}"
-    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "sit"}"
-    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "bow"}"
-    ros2 topic pub -1 /leg_set_joint example_interfaces/msg/Float64MultiArray "{data: [0, 3.14, 3.14, 3.54]}"
-    ros2 topic pub -1 /leg_set_pose my_robot_interface/msg/CubicDoggoLegPoseTarget "{leg_index: 0, x: 0.09, y: 0.14, z: 0.14}" 
-    ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: true}"
-    ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: false}"
 
 ### Testing the joystick controller:
 
@@ -216,6 +183,39 @@ To run the full robot, power on the driver boards and do:
     echo 0 > /tmp/fake_alarm                                                   # create a fake alarm by
     ros2 run my_robot_peripheral rasp_pi_peripheral_node --ros-args -p alarm_path:=/tmp/fake_alarm
     echo 1 > /tmp/fake_alarm                                                   # create a fake alarm by
+
+## Running the full robot
+
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf3.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf1.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf2.png" height="300"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf4.png" height="300"> 
+
+To check the rViz of the robot:
+
+    cd CubicDoggo_07B/
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_description cubic_doggo.rviz.launch.xacro.py
+
+The full robot uses two driver boards, and ``ls -l /dev/ttyACM*`` is randomly assigned, so it is not reliable. Instead, check,
+
+    ls -l /dev/serial/by-id/
+    vim src/my_robot_description/urdf/cubic_doggo.ros2_control.xacro
+    # Update the configuration to match the driver boards' unique IDs, for example,
+    ## <param name="port_name_front">/dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14033936-if00</param>
+    ## <param name="port_name_back"> /dev/serial/by-id/usb-1a86_USB_Single_Serial_5B14029539-if00</param>
+    colcon build
+
+To run the full robot, power on the driver boards and do:
+
+    ros2 launch my_robot_bringup cubic_doggo.with_lifecycle.launch.py
+    # on another terminal
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "rest"}"
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "stand"}"
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "sit"}"
+    ros2 topic pub -1 /leg_set_named example_interfaces/msg/String "{data: "bow"}"
+    ros2 topic pub -1 /leg_set_joint example_interfaces/msg/Float64MultiArray "{data: [0, 3.14, 3.14, 3.54]}"
+    ros2 topic pub -1 /leg_set_pose my_robot_interface/msg/CubicDoggoLegPoseTarget "{leg_index: 0, x: 0.09, y: 0.14, z: 0.14}" 
+    ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: true}"
+    ros2 service call /leg_walk_toggle std_srvs/srv/SetBool "{data: false}"
 
 ### Launching at the start of RaspPi
 
