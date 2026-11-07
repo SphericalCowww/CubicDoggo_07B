@@ -252,4 +252,4 @@ And yes, the LiDAR serves more as a counterweight at the moment. Planning to tur
 
 ## Acknowledgements
 
-- Libraries and some examples taken from: https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A). The license is not defined.
+- Libraries and some examples borrowed from Waveshare: https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A). The license is not specified. For reference only
