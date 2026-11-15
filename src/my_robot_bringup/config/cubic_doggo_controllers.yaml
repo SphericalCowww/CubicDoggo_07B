@@ -1,5 +1,5 @@
 # This config file is used by ros2_control
-controller_manager:
+/cubic_doggo/controller_manager:
   ros__parameters:
     update_rate: 100  # Hz
 
@@ -10,7 +10,7 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-all_legs_controller:
+/cubic_doggo/all_legs_controller:
   ros__parameters:
     joints:
       - servo1_servo1_padding_FL

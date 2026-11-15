@@ -2,9 +2,9 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 
 moveit_simple_controller_manager:
   controller_names:
-    - all_legs_controller
+    - /cubic_doggo/all_legs_controller
 
-  all_legs_controller:
+  /cubic_doggo/all_legs_controller:
     type: FollowJointTrajectory
     action_ns: follow_joint_trajectory
     default: true

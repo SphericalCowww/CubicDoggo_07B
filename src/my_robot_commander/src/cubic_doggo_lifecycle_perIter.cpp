@@ -133,7 +133,7 @@ public:
         }
 
         joint_publisher_ = this->create_publisher<trajectory_msgs::msg::JointTrajectory>(
-            "/all_legs_controller/joint_trajectory", 10);
+            "/cubic_doggo/all_legs_controller/joint_trajectory", 10);
         all_legs_robot_model_ = all_legs_interface_->getRobotModel();
         last_walk_state_ = std::make_shared<moveit::core::RobotState>(all_legs_robot_model_);
         last_walk_state_->setToDefaultValues();

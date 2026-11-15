@@ -2,8 +2,8 @@ from ament_index_python.packages import get_package_share_path
 from launch import LaunchDescription
 from launch_ros.parameter_descriptions import ParameterValue
 from launch.substitutions import Command
-from launch_ros.actions import Node, SetParameter
-from launch.actions import IncludeLaunchDescription
+from launch_ros.actions import Node, SetParameter, SetRemap
+from launch.actions import IncludeLaunchDescription, GroupAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from moveit_configs_utils import MoveItConfigsBuilder
 import os
@@ -24,6 +24,7 @@ def generate_launch_description():
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
+        namespace="cubic_doggo",
         parameters=[{'robot_description': robot_description}],
     )
 
@@ -35,6 +36,7 @@ def generate_launch_description():
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
+        namespace="cubic_doggo",
         parameters=[
             moveit_config.robot_description,
             robot_controllers,
@@ -44,12 +46,16 @@ def generate_launch_description():
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["joint_state_broadcaster"],
+        arguments=["joint_state_broadcaster",
+                   "-c", "/cubic_doggo/controller_manager",
+        ],
     )
     all_legs_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["all_legs_controller"],
+        arguments=["all_legs_controller",
+                   "-c", "/cubic_doggo/controller_manager",
+        ],
     )
     moveit_launcher = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(moveit_config_path),
@@ -102,7 +108,7 @@ def generate_launch_description():
         emulate_tty=True,
         parameters=[{"power_path": "/sys/class/hwmon/hwmon3/in0_lcrit_alarm",
                      "led_path":   "/sys/class/leds/ACT/"}]
-    )    
+    )
 
     launch_entities = [
         SetParameter(name="jump_threshold", value=0.15),
@@ -111,12 +117,24 @@ def generate_launch_description():
         control_node,
         joint_state_broadcaster_spawner,
         all_legs_controller_spawner,
-        moveit_launcher,
-        lifecycle_node,
+        #moveit_launcher,
+        #lifecycle_node,
+        GroupAction(
+            actions=[
+                    SetRemap(
+                        src="joint_states",
+                        dst="/cubic_doggo/joint_states",
+                    ),
+                    moveit_launcher,
+                    lifecycle_node,
+                ],
+            scoped=True,
+        ),
         #rviz_node,
         joy_driver_node,
         joy_controller_node,
         peripheral_node,
+
     ]
     
     return LaunchDescription(launch_entities)

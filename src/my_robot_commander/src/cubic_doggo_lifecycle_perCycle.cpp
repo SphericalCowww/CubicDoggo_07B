@@ -118,7 +118,7 @@ public:
         }
 
         joint_publisher_ = this->create_publisher<trajectory_msgs::msg::JointTrajectory>(
-            "/all_legs_controller/joint_trajectory", 10);
+            "/cubic_doggo/all_legs_controller/joint_trajectory", 10);
 
         current_lifecycle_state_ = "state_configured";
         RCLCPP_INFO(get_logger(), "CubicDoggoLifecycleManager:on_configure(): %s", current_lifecycle_state_.c_str());
