@@ -14,7 +14,7 @@ Demos: walking while carrying load ([Reddit](https://www.reddit.com/r/robotics/c
 
 ### 3D printing
 
-The 3D printer model Creality K1C is used with the Orcaslicer, but as long as PLA+ can be printed. All the FreeCAD files can be found here: <a href="https://github.com/SphericalCowww/CubicDoggo_07B/tree/main/src/my_robot_description/mesh/CADv2_ST-3215-C018">link</a>.
+The 3D printer model Creality K1C is used with the OrcaSlicer, but as long as it can print PLA+. All the FreeCAD files can be found here: <a href="https://github.com/SphericalCowww/CubicDoggo_07B/tree/main/src/my_robot_description/mesh/CADv2_ST-3215-C018">link</a>.
 
 ### Hardware 
 
@@ -30,14 +30,14 @@ The 3D printer model Creality K1C is used with the Orcaslicer, but as long as PL
 | bolts and nuts | | | M3 screws are used throughout, except where required to accommodate the servos and electronic boards; use locknuts |
 | locking washers | [M3](https://www.amazon.de/dp/B09SCQV81D) | | use in case when locknuts are not available; use it along side regular washer: 3D-printed surface => regular washer => locking washer (convex side away from the surface) => bolt |
 
-Other than the M3 screws (12mm, 16mm, 30mm), one specific requirement is the M2 self-tapping screws, specific to 10 mm length given 6mm padding, for the servos. Note that the length matters a lot, screw in 1 mm too much can already damage the servo!
+Other than the M3 screws (12mm, 16mm, 30mm), one specific requirement is the M2 self-tapping screws, specific to 10 mm length given 6mm padding, for the servos. Note that the length matters a lot; a screw 1 mm too long can already damage the servo!
 
 ### Power system
 
-  * Daisy chain no more than 3 servos to avoid excessive current
-  * **Soldering requirement:** T-plugs are soldered to the bottom of the screw terminal of the driver boards.
-  * **Soldering recommendation:** Add a toggle switch to each of the T-plugs between the driver board and the battery because the boards don't have power switches. Search for 12V, 20A requirement for the toggle switches.
-  * Power the servo driver board with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between rail and ground with correct polarity (shown in the right photo)
+  * Daisy-chain no more than 3 servos to avoid excessive current
+  * **Soldering requirement:** T-plugs are soldered to the bottom of the screw terminal on the driver boards.
+  * **Soldering recommendation:** Add a toggle switch to each of the T-plugs between the driver board and the battery because the boards don't have power switches. Search for 12V, 20A requirements for the toggle switches.
+  * Power the servo driver board with the screw terminal to handle ~16 amp current draw. Insert a 1000uF capacitor between the rail and ground with the correct polarity (shown in the right photo)
   * Also, in the right photo, the table is covered by a fire blanket in case of electrical shortages/high current during the testing stage
   * The ground between the 2 driver boards should be shared when both are connected to the Rasp Pi via USB
   * Power the RaspPi via a ~12V-to-5V DC-DC converter. Don't forget to put Kapton tape to insulate the two boards
