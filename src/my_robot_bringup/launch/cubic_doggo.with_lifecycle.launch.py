@@ -63,8 +63,7 @@ def generate_launch_description():
     )
     lifecycle_node = Node(
         package="my_robot_commander",
-        executable="cubic_doggo_lifecycle_perCycle",
-        #executable="cubic_doggo_lifecycle_perIter",
+        executable="cubic_doggo_lifecycle",
         parameters=[
             moveit_config.robot_description,           # the URDF math
             moveit_config.robot_description_semantic,  # the SRDF 

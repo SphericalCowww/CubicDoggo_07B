@@ -332,10 +332,17 @@ private:
                     local_phase -= 1.0;
                 }
 
+                double lift_ratio = 1.0;
+                if (x_stride < -0.001) {
+                    lift_ratio = lift_ratios_L_[legIdx];
+                } else if (x_stride > 0.001) {    
+                    lift_ratio = lift_ratios_R_[legIdx];
+                }
+
                 double x_offset = 0.0, y_offset = 0.0, z_offset = 0.0;
                 if (local_phase < swing_fraction) {
                     double swing_progress = local_phase/swing_fraction; 
-                    z_offset = lift*std::sin(swing_progress*M_PI);
+                    z_offset = lift_ratio*lift*std::sin(swing_progress*M_PI);
                     if (swing_fraction >= 0.5) {
                         x_offset = -x_stride + 2.0*x_stride*swing_progress;
                         y_offset = -y_stride + 2.0*y_stride*swing_progress;
@@ -398,12 +405,18 @@ private:
         response->message = is_walking_ ? "walking started" : "walking stopped";
     }
     void walkingLoop_() {
+        rclcpp::get_logger("").set_level(rclcpp::Logger::Level::Warn);        // for silencing output
+
         double maxVelScale = 1.0, maxAccScale = 1.0;
-        int    waypoint_N     = 50;       // number of waypoints for each cycle,      default 100
-        double waypoint_dt    = 0.02;      // second for each waypoint,                default 0.01
-        double IK_bufferTime  = 0.01;      // time at end of cycle buffer for IK calc, default 0.10
-        double swing_fraction = 0.40;      // creep < 0.25 < stable trot < 0.5 < trot
+        int    waypoint_N     = 50;       // number of waypoints for each cycle,      default 50
+        double waypoint_dt_y  = 0.02;     // second for each waypoint,                default 0.02
+        double waypoint_dt_x  = 0.035;    // for turning,                             default 0.035
+        double waypoint_dt    = waypoint_dt_y;
+        double IK_bufferTime  = 0.01;     // time at end of cycle buffer for IK calc, default 0.10
+        double swing_fraction = 0.40;     // creep < 0.25 < stable trot < 0.5 < trot
         double lift = 0.02, x_stride_max = 0.02, y_stride_max = 0.025, x_shift = 0.0, y_shift = 0.0;
+        lift_ratios_L_ = {1.0, 1.0, 1.0, 1.0};
+        lift_ratios_R_ = {1.0, 1.0, 1.0, 1.0};
         double x_stride = 0.0, y_stride = 0.0;
 
         all_legs_robot_model_ = all_legs_interface_->getRobotModel();
@@ -431,6 +444,11 @@ private:
             
             x_stride = target_x_stride_*x_stride_max;
             y_stride = target_y_stride_*y_stride_max;
+            if (std::abs(target_x_stride_) < 0.5) {
+                waypoint_dt = waypoint_dt_y;
+            } else {
+                waypoint_dt = waypoint_dt_x;
+            }
             std::vector<moveit::core::RobotStatePtr> gait_waypoints = sineWalkGait_(
                 waypoint_N, swing_fraction, lift, x_stride, y_stride, x_shift, y_shift);
             if (gait_waypoints.empty()) {
@@ -569,6 +587,9 @@ private:
     moveit::core::RobotModelConstPtr                                    all_legs_robot_model_;
     rclcpp::Publisher<trajectory_msgs::msg::JointTrajectory>::SharedPtr joint_publisher_;
     rclcpp_action::Client<ExecuteTrajectory>::SharedPtr                 exec_action_client_;
+
+    std::array<double, legN> lift_ratios_L_{1.0, 1.0, 1.0, 1.0};
+    std::array<double, legN> lift_ratios_R_{1.0, 1.0, 1.0, 1.0};
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv) {
