@@ -8,7 +8,7 @@ The CAD files in FreeCAD (so completely free to modify) can be found in <a href=
 
 Demos: walking while carrying load ([Reddit](https://www.reddit.com/r/robotics/comments/1xh34ti/cubic_doggo_update_wouf_walking_with_1kg_22lb/)), load carrying endorance test ([Reddit](https://www.reddit.com/r/robotics/comments/1xkmeok/cubic_doggo_test_woufs_spooky_endorance_test/), Halloween edition), release post ([Reddit](https://www.reddit.com/r/robotics/comments/1xj0ul9/cubic_doggo_07b_wouf_a_lowbudget_opensource/)), promo video ([Reddit]())
 
-<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf1.webp" height="500">
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf1.webp" height="500"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf3.webp" height="200"> <img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_Wouf4.webp" height="200">
 
 ## Ingredients
 
@@ -48,7 +48,7 @@ Other than the M3 screws (12mm, 16mm, 30mm), one specific requirement is the M2 
 
 ### Testing with STServo Python library
 
-<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo1.png" height="200">
+<img src="https://github.com/SphericalCowww/CubicDoggo_07B/blob/main/fig_servo1.png" height="200"> 
 
 Plug in the device:
 
